@@ -1,3 +1,7 @@
+---
+inclusion: always
+---
+
 # Technology Stack
 
 ## Frontend
@@ -5,30 +9,38 @@
 - **Framework**: React 19.0.0
 - **Build Tool**: Vite 6.0.7
 - **Routing**: React Router DOM 7.9.4
-- **Styling**: TailwindCSS 3.4.17
-- **Animations**: Motion 11.15.0
-- **PDF Generation**: jsPDF 3.0.3
-- **Image Processing**: html2canvas 1.4.1, react-image-crop 11.0.10
+- **Styling**: TailwindCSS 3.4.17 with custom glassmorphism design
+- **Animations**: Motion 11.15.0 (Framer Motion)
+- **PDF Generation**: jsPDF 3.0.3, html2canvas 1.4.1
+- **HTTP Client**: Axios (via services/api.js)
 - **UI Library**: liquid-glass-react 1.1.1
 
 ## Backend (Dual Architecture)
 
-### Backend 1: Node.js/Express
-- **Purpose**: Serves React frontend, handles WebSockets
-- **Port**: 3000 (development), 5173 (Vite default)
-- **Responsibilities**: Static file serving, real-time updates, API proxying
+### Node.js Server
+- **Purpose**: Serves React frontend, handles WebSocket connections (future)
+- **Port**: 5173 (development)
+- **Role**: Frontend serving, real-time updates
 
-### Backend 2: PHP
+### PHP Server
 - **Purpose**: Complete REST API backend
 - **Port**: 8000 (or 80 via XAMPP)
-- **Responsibilities**: Authentication (JWT), database operations, file uploads, business logic
-- **Database**: MySQL 8.0 via PDO
+- **Role**: Authentication, database operations, file uploads, business logic
+- **Authentication**: JWT tokens (stateless, NOT sessions)
+
+## Database
+
+- **RDBMS**: MySQL 8.0
+- **Character Set**: utf8mb4
+- **Collation**: utf8mb4_unicode_ci
+- **Tables**: 11 core tables (users, students, teachers, admins, subjects, marks, attendance, fees, payments, sessions, semesters)
 
 ## Development Tools
 
-- **Docker**: docker-compose.yml for containerized development
-- **XAMPP**: Alternative local development (Apache + MySQL + PHP)
-- **PostCSS**: 8.4.49 with Autoprefixer 10.4.20
+- **Containerization**: Docker & Docker Compose
+- **Local Development**: XAMPP (Apache + MySQL + PHP)
+- **Code Quality**: ESLint, Prettier
+- **Version Control**: Git
 
 ## Common Commands
 
@@ -37,27 +49,26 @@
 # Install dependencies
 npm install
 
-# Start frontend dev server
+# Start frontend dev server (Vite)
 npm run dev
 
-# Start PHP backend (XAMPP)
-# Start Apache in XAMPP Control Panel
+# Start PHP backend (if not using XAMPP)
+cd backend && php -S localhost:8000
 
-# Start PHP backend (built-in server)
-cd backend
-php -S localhost:8000
-
-# Start all services with Docker
+# Start with Docker
 docker-compose up -d
 ```
 
-### Build
+### Build & Deploy
 ```bash
 # Build for production
 npm run build
 
 # Preview production build
 npm run preview
+
+# Lint code
+npm run lint
 ```
 
 ### Database
@@ -65,20 +76,30 @@ npm run preview
 # Import schema
 mysql -u root -p studentportal < database/schema.sql
 
-# Access phpMyAdmin (Docker)
-# http://localhost:8080
+# Import seed data (in order)
+mysql -u root -p studentportal < database/seeds/01_sessions.sql
+mysql -u root -p studentportal < database/seeds/02_admin.sql
+# ... continue with remaining seed files
 ```
 
-## Configuration Files
+## File Storage
 
-- `vite.config.js`: Vite dev server config (port 3000, HMR, CORS)
-- `tailwind.config.js`: TailwindCSS config (dark mode, primary color #137fec)
-- `postcss.config.js`: PostCSS with Tailwind and Autoprefixer
-- `docker-compose.yml`: Multi-container setup (frontend, backend, database, phpMyAdmin)
-- `backend/config/database.php`: MySQL connection settings
-- `backend/config/jwt.php`: JWT secret key configuration
+- **Location**: Local file system (NOT cloud storage)
+- **Paths**: 
+  - Assignments: `/backend/uploads/assignments/`
+  - Profiles: `/backend/uploads/profiles/`
+  - Receipts: `/backend/uploads/receipts/`
+- **Database**: Stores file paths only
+
+## API Communication
+
+- **Format**: JSON
+- **Auth**: JWT Bearer tokens in Authorization header
+- **CORS**: Enabled for localhost:5173
+- **Base URL**: `http://localhost:8000/api`
 
 ## Environment Variables
 
-- `VITE_API_URL`: Backend API URL (default: http://localhost:8000/api)
-- `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`: Database credentials
+Key variables in `.env`:
+- `VITE_API_URL`: Backend API URL
+- Database credentials in `backend/config/database.php`

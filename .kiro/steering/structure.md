@@ -1,113 +1,153 @@
+---
+inclusion: always
+---
+
 # Project Structure
 
 ## Root Organization
 
 ```
 studentportal-main/
-├── backend/           # PHP REST API
-├── database/          # SQL schemas and migrations
-├── docs/              # Complete documentation
-├── docker/            # Docker configuration files
-├── public/            # Static assets
-├── src/               # React frontend source
-├── .kiro/             # Kiro AI assistant configuration
-└── [config files]     # Build and tooling configs
+├── backend/              # PHP API server
+├── database/             # SQL schemas and migrations
+├── docs/                 # Complete documentation
+├── docker/               # Docker configuration
+├── public/               # Static assets
+├── src/                  # React frontend source
+├── node_modules/         # NPM dependencies
+└── [config files]        # Build and tool configs
 ```
 
 ## Frontend Structure (`src/`)
 
 ```
 src/
-├── components/        # Reusable React components
-├── pages/             # Page-level components (routes)
-│   ├── admin/         # Admin-specific pages
-│   ├── Dashboard.jsx  # Student dashboard
-│   ├── Login.jsx      # Authentication page
-│   └── [other pages]  # Student/teacher pages
-├── services/          # API service layer
-│   └── api.js         # Axios instance, auth helpers
-├── utils/             # Utility functions
-├── App.jsx            # Main app component with routing
-├── main.jsx           # React entry point
-└── index.css          # Global styles (Tailwind imports)
+├── components/           # Reusable UI components
+│   ├── Navbar.jsx       # Top navigation bar
+│   ├── Sidebar.jsx      # Side navigation menu
+│   ├── GlassCard.jsx    # Glassmorphism card component
+│   └── [other components]
+├── pages/               # Page-level components
+│   ├── Login.jsx        # Login page
+│   ├── Dashboard.jsx    # Student dashboard
+│   ├── admin/           # Admin portal pages
+│   │   ├── AdminDashboard.jsx
+│   │   ├── AdminStudents.jsx
+│   │   ├── AdminTeachers.jsx
+│   │   └── [other admin pages]
+│   └── [teacher pages]
+├── services/            # API and business logic
+│   └── api.js          # Axios instance, API calls, auth helpers
+├── utils/              # Utility functions
+│   └── gradeCalculator.js  # GP/CP/GPA/CGPA calculations
+├── App.jsx             # Main app component with routing
+├── main.jsx            # React entry point
+└── index.css           # Global styles (Tailwind imports)
 ```
 
 ## Backend Structure (`backend/`)
 
 ```
 backend/
-├── api/               # REST API endpoints
-│   ├── auth/          # Authentication (login, verify, logout)
-│   ├── student/       # Student endpoints (marks, attendance, fees)
-│   ├── teacher/       # Teacher endpoints (students, marks, attendance)
-│   └── admin/         # Admin endpoints (users, fees, reports)
-├── config/            # Configuration files
-│   ├── database.php   # PDO database connection
-│   └── jwt.php        # JWT secret and helpers
-├── includes/          # Shared PHP code
-│   ├── auth.php       # Authentication middleware
-│   ├── cors.php       # CORS headers
-│   └── functions.php  # Utility functions
-├── uploads/           # File storage (local filesystem)
-│   ├── assignments/   # Student assignment files
-│   ├── profiles/      # Profile photos
-│   └── receipts/      # Generated PDF receipts
-└── index.php          # API entry point
+├── api/                 # REST API endpoints
+│   ├── auth/           # Authentication (login, logout, verify)
+│   ├── student/        # Student endpoints (marks, attendance, fees, payments, profile)
+│   ├── teacher/        # Teacher endpoints (attendance, marks, students)
+│   ├── admin/          # Admin endpoints
+│   │   ├── students/   # Student CRUD
+│   │   ├── teachers/   # Teacher CRUD
+│   │   ├── fees/       # Fee management
+│   │   ├── payments/   # Payment processing
+│   │   ├── subjects/   # Subject management
+│   │   └── notices/    # Notice management
+│   ├── notices/        # Public notice endpoints
+│   └── upload/         # File upload handlers
+├── config/             # Configuration files
+│   ├── database.php    # PDO database connection
+│   └── jwt.php         # JWT token helpers
+├── includes/           # Helper functions
+│   ├── auth.php        # Authentication middleware
+│   ├── cors.php        # CORS headers
+│   ├── validation.php  # Input validation functions
+│   ├── grade_calculator.php  # Grade calculation logic
+│   └── functions.php   # Utility functions
+├── uploads/            # File storage (local filesystem)
+│   ├── assignments/
+│   ├── profiles/
+│   └── receipts/
+├── logs/               # Error and access logs
+└── index.php           # API entry point
 ```
 
 ## Database Structure (`database/`)
 
 ```
 database/
-├── migrations/        # Database migration scripts
-├── seeds/             # Seed data for development
-├── schema.sql         # Complete database schema
-└── README.md          # Database documentation
+├── schema.sql          # Complete database schema (11 tables)
+├── migrations/         # Database migration scripts
+└── seeds/              # Test data (9 seed files, run in order)
+    ├── 01_sessions.sql
+    ├── 02_admin.sql
+    ├── 03_teachers.sql
+    └── [other seed files]
 ```
 
 ## Documentation Structure (`docs/`)
 
 ```
 docs/
-├── api/               # API endpoint documentation
-├── architecture/      # System architecture docs
-├── database/          # Database schema and design
-├── features/          # Feature-specific documentation
-├── setup/             # Installation and setup guides
-├── START_HERE.md      # Entry point for new developers
-├── COMPLETE_PROJECT_GUIDE.md  # Master guide
-└── CRITICAL_CLARIFICATIONS.md # Important implementation details
+├── START_HERE.md                    # Entry point for all documentation
+├── COMPLETE_PROJECT_GUIDE.md        # Comprehensive project overview
+├── CRITICAL_CLARIFICATIONS.md       # Important implementation details
+├── DEVELOPMENT_WORKFLOW.md          # Development process guide
+├── architecture/                    # System architecture docs
+│   ├── DUAL_BACKEND_ARCHITECTURE.md # Node.js + PHP explanation
+│   ├── SYSTEM_ARCHITECTURE.md
+│   ├── FRONTEND_ARCHITECTURE.md
+│   └── BACKEND_ARCHITECTURE.md
+├── api/                            # API documentation
+│   ├── API_OVERVIEW.md
+│   ├── AUTH_ENDPOINTS.md
+│   ├── STUDENT_ENDPOINTS.md
+│   ├── TEACHER_ENDPOINTS.md
+│   └── ADMIN_ENDPOINTS.md
+├── database/                       # Database documentation
+│   └── SCHEMA.md
+├── features/                       # Feature-specific docs
+│   ├── GRADE_CALCULATION.md
+│   ├── FEE_MANAGEMENT.md
+│   └── [other features]
+└── setup/                          # Setup guides
+    ├── SETUP_GUIDE.md
+    ├── DOCKER_SETUP.md
+    └── LOCAL_SETUP.md
 ```
 
 ## Key Conventions
 
 ### File Naming
-- React components: PascalCase (e.g., `Dashboard.jsx`, `AdminStudents.jsx`)
-- PHP files: lowercase with underscores (e.g., `login.php`, `database.php`)
-- Config files: lowercase with dots (e.g., `vite.config.js`, `docker-compose.yml`)
-
-### Routing Patterns
-- Student routes: `/dashboard`, `/notice`, `/payments`, `/subjects`, `/result`, `/analysis`
-- Admin routes: `/admin/dashboard`, `/admin/students`, `/admin/teachers`, etc.
-- Teacher routes: `/teacher/dashboard`, `/teacher/attendance`, `/teacher/students`, etc.
-- API routes: `/api/{role}/{resource}.php` (e.g., `/api/student/marks.php`)
+- **React Components**: PascalCase (e.g., `StudentDashboard.jsx`)
+- **PHP Files**: snake_case (e.g., `get_marks.php`)
+- **Utilities**: camelCase (e.g., `gradeCalculator.js`)
+- **Documentation**: SCREAMING_SNAKE_CASE (e.g., `SETUP_GUIDE.md`)
 
 ### Component Organization
-- Page components in `src/pages/`
-- Reusable components in `src/components/`
-- Role-specific pages in subdirectories (e.g., `src/pages/admin/`)
-- Protected routes use `ProtectedRoute` wrapper with `allowedRoles` prop
+- One component per file
+- Co-locate related components in subdirectories
+- Separate page components from reusable components
 
-### API Service Layer
-- All API calls go through `src/services/api.js`
-- JWT token stored in localStorage
-- Token automatically included in request headers
-- Authentication helpers: `isAuthenticated()`, `getCurrentUser()`, `logout()`
+### API Endpoint Structure
+- RESTful conventions
+- Grouped by role/resource
+- Consistent response format: `{ success: boolean, data: any, error?: string }`
 
 ### Database Tables
-11 core tables: users, sessions, students, teachers, admins, subjects, semesters, marks, attendance, fees, payments
+- Singular names (e.g., `users`, not `user`)
+- Foreign keys: `{table}_id` (e.g., `user_id`)
+- Timestamps: `created_at`, `updated_at`
+- Soft deletes: `is_active` boolean flag
 
-### File Uploads
-- Stored in `backend/uploads/` subdirectories
-- Database stores file paths only (not binary data)
-- PHP uses `move_uploaded_file()` for handling uploads
+### Routing Patterns
+- Student routes: `/dashboard`, `/subjects`, `/result`, etc.
+- Teacher routes: `/teacher/dashboard`, `/teacher/attendance`, etc.
+- Admin routes: `/admin/dashboard`, `/admin/students`, etc.

@@ -47,7 +47,7 @@ export default function Login() {
         // Redirect based on role
         if (result.user.role === 'admin') {
           navigate('/admin/dashboard')
-        } else if (result.user.role === 'staff') {
+        } else if (result.user.role === 'teacher') {
           navigate('/teacher/dashboard')
         } else {
           navigate('/dashboard')
@@ -155,22 +155,22 @@ export default function Login() {
 
             <input
               type="radio"
-              id="role-staff"
+              id="role-teacher"
               name="role"
-              value="staff"
-              checked={role === 'staff'}
+              value="teacher"
+              checked={role === 'teacher'}
               onChange={(e) => setRole(e.target.value)}
               className="hidden"
             />
             <label
-              htmlFor="role-staff"
-              data-role="staff"
-              onMouseEnter={() => handleLabelHover('staff')}
+              htmlFor="role-teacher"
+              data-role="teacher"
+              onMouseEnter={() => handleLabelHover('teacher')}
               className={`flex-1 py-2 text-center font-semibold cursor-pointer relative z-10 transition-colors ${
-                role === 'staff' ? 'text-white' : 'text-slate-600 dark:text-slate-300'
+                role === 'teacher' ? 'text-white' : 'text-slate-600 dark:text-slate-300'
               }`}
             >
-              Staff
+              Teacher
             </label>
 
             <input

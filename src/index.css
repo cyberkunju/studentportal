@@ -3,21 +3,92 @@
 @tailwind utilities;
 
 @layer base {
+  /* CSS Custom Properties for New Color Palette */
+  :root {
+    /* Gunmetal Shades */
+    --color-gunmetal-50: #f5f5f6;
+    --color-gunmetal-100: #e6e6e8;
+    --color-gunmetal-200: #cccdd1;
+    --color-gunmetal-300: #a8aab1;
+    --color-gunmetal-400: #7d8089;
+    --color-gunmetal-500: #5f626c;
+    --color-gunmetal-600: #4d4f58;
+    --color-gunmetal-700: #3b3d43;
+    --color-gunmetal-800: #2a2d34;
+    --color-gunmetal-900: #1f2126;
+    
+    /* Lavender Blush Shades */
+    --color-lavender-blush-50: #fdfcfd;
+    --color-lavender-blush-100: #faf8f9;
+    --color-lavender-blush-200: #f6f2f4;
+    --color-lavender-blush-300: #f2ecef;
+    --color-lavender-blush-400: #eee5e9;
+    --color-lavender-blush-500: #d9cdd3;
+    --color-lavender-blush-600: #c4b5bd;
+    --color-lavender-blush-700: #9d8a94;
+    --color-lavender-blush-800: #76606b;
+    --color-lavender-blush-900: #4f3642;
+    
+    /* Celestial Blue Shades */
+    --color-celestial-blue-50: #e6f7ff;
+    --color-celestial-blue-100: #b3e5ff;
+    --color-celestial-blue-200: #80d4ff;
+    --color-celestial-blue-300: #4dc2ff;
+    --color-celestial-blue-400: #1ab0ff;
+    --color-celestial-blue-500: #009ddc;
+    --color-celestial-blue-600: #007db0;
+    --color-celestial-blue-700: #005d84;
+    --color-celestial-blue-800: #003e58;
+    --color-celestial-blue-900: #001e2c;
+    
+    /* Giants Orange Shades */
+    --color-giants-orange-50: #fff4f0;
+    --color-giants-orange-100: #ffe0d6;
+    --color-giants-orange-200: #ffccbd;
+    --color-giants-orange-300: #ffb8a3;
+    --color-giants-orange-400: #ffa48a;
+    --color-giants-orange-500: #f26430;
+    --color-giants-orange-600: #d94e1a;
+    --color-giants-orange-700: #c03a0a;
+    --color-giants-orange-800: #8a2a07;
+    --color-giants-orange-900: #541a04;
+  }
+
   body {
-    @apply bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900;
+    /* Light Mode: Lavender Blush gradient background */
+    @apply bg-gradient-to-br from-lavender-blush-400 via-lavender-blush-300 to-lavender-blush-200;
+    /* Dark Mode: Gunmetal gradient background */
+    @apply dark:bg-gradient-to-br dark:from-gunmetal-800 dark:via-gunmetal-700 dark:to-gunmetal-900;
     min-height: 100vh;
+    transition: background-color 300ms ease-in-out;
   }
 }
 
 @layer utilities {
+  /* Minimalistic hover animation - subtle opacity change only */
   .hover-card {
-    transition: all 0.3s ease !important;
+    transition: opacity 200ms ease-in-out;
   }
   
   .hover-card:hover {
-    background: rgba(255, 255, 255, 0.4) !important;
-    transform: translateY(-8px) !important;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+    opacity: 0.9;
+  }
+
+  /* Glassmorphic effect utilities */
+  .glass-standard {
+    @apply bg-white/20 dark:bg-gray-800/20 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-lg;
+  }
+  
+  .glass-enhanced {
+    @apply bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-lg;
+  }
+  
+  .glass-subtle {
+    @apply bg-white/10 dark:bg-gray-800/10 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-md;
+  }
+  
+  .glass-frosted {
+    @apply bg-white/40 dark:bg-gray-800/40 backdrop-blur-2xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-xl;
   }
 
   /* Hide scrollbar but keep functionality */
@@ -52,9 +123,9 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Enhanced Select Dropdown Styling */
+/* Enhanced Select Dropdown Styling - Updated with Celestial Blue */
 select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2314b8a6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23009ddc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
   background-position: right 1rem center;
   background-repeat: no-repeat;
   background-size: 1.25em 1.25em;
@@ -68,7 +139,7 @@ select {
 }
 
 .dark select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%235eead4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%231ab0ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
 }
 
 /* Select dropdown menu styling - rounded corners */
@@ -76,7 +147,7 @@ select::-ms-expand {
   display: none;
 }
 
-/* Webkit scrollbar for select dropdown */
+/* Webkit scrollbar for select dropdown - Updated with Celestial Blue */
 select::-webkit-scrollbar {
   width: 8px;
 }
@@ -87,7 +158,7 @@ select::-webkit-scrollbar-track {
 }
 
 select::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  background: linear-gradient(135deg, #009ddc 0%, #007db0 100%);
   border-radius: 10px;
 }
 
@@ -129,49 +200,44 @@ select option:last-child {
   padding-bottom: 16px;
 }
 
-/* Selected/Checked option - Teal gradient */
+/* Selected/Checked option - Celestial Blue gradient */
 select option:checked {
-  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+  background: linear-gradient(135deg, #009ddc 0%, #007db0 100%) !important;
   color: white !important;
   font-weight: 600;
 }
 
-/* Hover state for options */
+/* Hover state for options - Subtle Celestial Blue */
 select option:hover {
-  background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(13, 148, 136, 0.15) 100%) !important;
-  color: #0d9488 !important;
+  background: linear-gradient(135deg, rgba(0, 157, 220, 0.1) 0%, rgba(0, 125, 176, 0.1) 100%) !important;
+  color: #007db0 !important;
   font-weight: 600;
 }
 
 .dark select option:hover {
-  background: linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(13, 148, 136, 0.25) 100%) !important;
-  color: #5eead4 !important;
+  background: linear-gradient(135deg, rgba(0, 157, 220, 0.1) 0%, rgba(0, 125, 176, 0.1) 100%) !important;
+  color: #1ab0ff !important;
 }
 
-/* Select focus state */
+/* Select focus state - Celestial Blue with minimalistic animation */
 select:focus {
   outline: none;
-  border-color: #14b8a6;
-  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
-  transform: translateY(-1px);
+  border-color: #009ddc;
+  box-shadow: 0 0 0 4px rgba(0, 157, 220, 0.15);
+  transition: all 200ms ease-in-out;
 }
 
-/* Select hover state */
+/* Select hover state - Minimalistic, no transform */
 select:hover {
-  border-color: #14b8a6;
+  border-color: #009ddc;
   background-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 157, 220, 0.15);
+  transition: all 200ms ease-in-out;
 }
 
 .dark select:hover {
   background-color: rgba(31, 41, 55, 0.8);
-  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.2);
-}
-
-/* Active/Open state */
-select:active {
-  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 157, 220, 0.2);
 }
 
 /* Transition Overlay - 4 Panel Wipe Effect */
@@ -219,11 +285,11 @@ input[type="number"] {
 
 /* Smooth Calendar Popup Animations */
 
-/* Calendar icon styling */
+/* Calendar icon styling - Updated with Celestial Blue */
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   opacity: 0.6;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease-in-out;
   filter: invert(0.5);
   padding: 8px;
   border-radius: 6px;
@@ -231,9 +297,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="date"]:hover::-webkit-calendar-picker-indicator {
   opacity: 1;
-  transform: scale(1.1);
   filter: invert(0.3);
-  background: rgba(20, 184, 166, 0.1);
+  background: rgba(0, 157, 220, 0.1);
 }
 
 input[type="date"]:focus::-webkit-calendar-picker-indicator {
@@ -259,27 +324,26 @@ input[type="date"]::-webkit-calendar-picker-indicator:active {
   }
 }
 
-/* Smooth focus ring animation */
+/* Smooth focus ring animation - Celestial Blue */
 input[type="date"]:focus {
-  animation: focusRing 0.3s ease-out;
+  animation: focusRing 0.2s ease-out;
 }
 
 @keyframes focusRing {
   0% {
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+    box-shadow: 0 0 0 0 rgba(0, 157, 220, 0.4);
   }
   100% {
-    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 157, 220, 0.1);
   }
 }
 
-/* Smooth transition for date input */
+/* Smooth transition for date input - Minimalistic */
 input[type="date"] {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease-in-out;
 }
 
 input[type="date"]:hover {
-  transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -333,10 +397,10 @@ input[type="date"]:focus::-webkit-datetime-edit {
   transform: translateX(2px);
 }
 
-/* Calendar popup styling - applies when calendar is open */
+/* Calendar popup styling - applies when calendar is open - Celestial Blue */
 input[type="date"][aria-expanded="true"] {
-  box-shadow: 0 8px 24px rgba(20, 184, 166, 0.2);
-  border-color: rgb(20, 184, 166);
+  box-shadow: 0 8px 24px rgba(0, 157, 220, 0.2);
+  border-color: rgb(0, 157, 220);
 }
 
 /* Smooth calendar table animations */

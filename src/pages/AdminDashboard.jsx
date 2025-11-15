@@ -243,6 +243,36 @@ export default function AdminDashboard() {
             Open
           </button>
         </div>
+
+        {/* Academic Sessions */}
+        <div 
+          onClick={() => navigate('/admin/sessions')}
+          className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer"
+        >
+          <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center mb-4">
+            <i className="fas fa-calendar-alt text-2xl text-indigo-500"></i>
+          </div>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Academic Sessions</h3>
+          <p className="text-slate-600 dark:text-slate-400 mb-4">Manage academic sessions and semesters</p>
+          <button className="w-full py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-semibold transition-all">
+            Open
+          </button>
+        </div>
+
+        {/* Reports & Analytics */}
+        <div 
+          onClick={() => navigate('/admin/reports')}
+          className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-pink-500/10 dark:hover:bg-pink-500/20 transition-all cursor-pointer"
+        >
+          <div className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center mb-4">
+            <i className="fas fa-chart-pie text-2xl text-pink-500"></i>
+          </div>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Reports & Analytics</h3>
+          <p className="text-slate-600 dark:text-slate-400 mb-4">View performance, financial, and trends reports</p>
+          <button className="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-semibold transition-all">
+            Open
+          </button>
+        </div>
       </div>
 
       {/* Recent Notices */}

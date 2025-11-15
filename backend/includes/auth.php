@@ -59,6 +59,11 @@ function checkRole($required_role) {
         exit();
     }
     
+    // Admin can access all endpoints
+    if ($user['role'] === 'admin') {
+        return true;
+    }
+    
     if ($user['role'] !== $required_role) {
         http_response_code(403);
         echo json_encode(['error' => 'Forbidden', 'message' => 'You do not have permission to access this resource']);
@@ -69,30 +74,14 @@ function checkRole($required_role) {
 }
 
 /**
- * Send JSON response
+ * Require specific role (alias for checkRole for backward compatibility)
  * 
- * @param array $data Response data
- * @param int $status_code HTTP status code
+ * @param string $required_role Required role (student, teacher, admin)
+ * @return bool True if user has role, exits otherwise
  */
-function sendResponse($data, $status_code = 200) {
-    http_response_code($status_code);
-    echo json_encode($data);
-    exit();
+function requireRole($required_role) {
+    return checkRole($required_role);
 }
 
-/**
- * Send error response
- * 
- * @param string $message Error message
- * @param int $status_code HTTP status code
- */
-function sendError($message, $status_code = 400) {
-    http_response_code($status_code);
-    echo json_encode([
-        'success' => false,
-        'error' => true,
-        'message' => $message
-    ]);
-    exit();
-}
+// Note: sendResponse and sendError functions are defined in functions.php
 ?>

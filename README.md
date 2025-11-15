@@ -80,8 +80,21 @@ npm run dev
 - Node.js 18.x or higher
 - npm 9.x or higher
 - MySQL 8.0
-- PHP 8.x
+- PHP 8.x (with PDO, cURL, GD extensions)
+- Composer (for PHP dependencies)
 - Docker (optional)
+
+### PHP Dependencies
+
+The backend requires TCPDF library for PDF generation:
+
+```bash
+cd backend
+composer install
+```
+
+This will install:
+- **TCPDF** (tecnickcom/tcpdf) - For generating ID cards, receipts, and performance reports
 
 ## 🔧 Setup Options
 
@@ -91,9 +104,24 @@ docker-compose up -d
 ```
 
 ### Option 2: Local with XAMPP
-See [Local Setup Guide](./docs/setup/LOCAL_SETUP.md)
+```bash
+# 1. Install backend dependencies
+cd backend
+composer install
 
-### Option 3: Frontend Only
+# 2. Import database
+mysql -u root -p studentportal < database/schema.sql
+
+# 3. Start XAMPP (Apache + MySQL)
+
+# 4. Install frontend dependencies
+npm install
+npm run dev
+```
+
+See [Local Setup Guide](./docs/setup/LOCAL_SETUP.md) for detailed instructions.
+
+### Option 3: Frontend Only (Mock Data)
 ```bash
 npm install
 npm run dev

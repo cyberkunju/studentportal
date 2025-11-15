@@ -9,146 +9,9 @@ export default function Subjects() {
   const navigate = useNavigate()
   const [subjects, setSubjects] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [selectedSemester, setSelectedSemester] = useState(null)
   const user = api.getCurrentUser()
-
-  // Subject database by department and semester
-  const subjectDatabase = {
-    'BCA': {
-      1: [
-        { code: 'BCA101', name: 'Programming Fundamentals', credits: 4, teacher: 'Dr. Rajesh Kumar' },
-        { code: 'BCA102', name: 'Digital Electronics', credits: 4, teacher: 'Prof. Anita Desai' },
-        { code: 'BCA103', name: 'Mathematics I', credits: 4, teacher: 'Dr. Suresh Patel' },
-        { code: 'BCA104', name: 'English Communication', credits: 3, teacher: 'Ms. Priya Sharma' },
-        { code: 'BCA105', name: 'Computer Organization', credits: 4, teacher: 'Dr. Amit Singh' }
-      ],
-      2: [
-        { code: 'BCA201', name: 'Data Structures Fundamentals', credits: 4, teacher: 'Dr. Rajesh Kumar' },
-        { code: 'BCA202', name: 'Computer Architecture', credits: 4, teacher: 'Prof. Vikram Mehta' },
-        { code: 'BCA203', name: 'Mathematics II', credits: 4, teacher: 'Dr. Suresh Patel' },
-        { code: 'BCA204', name: 'Object Oriented Programming', credits: 4, teacher: 'Ms. Neha Gupta' },
-        { code: 'BCA205', name: 'Software Lab II', credits: 2, teacher: 'Mr. Karan Joshi' }
-      ],
-      3: [
-        { code: 'BCA301', name: 'Data Structures', credits: 4, teacher: 'Dr. Rajesh Kumar' },
-        { code: 'BCA302', name: 'Database Management Systems', credits: 4, teacher: 'Prof. Anita Desai' },
-        { code: 'BCA303', name: 'Operating Systems', credits: 4, teacher: 'Dr. Amit Singh' },
-        { code: 'BCA304', name: 'Web Technologies', credits: 4, teacher: 'Ms. Priya Sharma' },
-        { code: 'BCA305', name: 'Software Engineering', credits: 4, teacher: 'Dr. Vikram Mehta' }
-      ],
-      4: [
-        { code: 'BCA401', name: 'Computer Networks Fundamentals', credits: 4, teacher: 'Dr. Amit Singh' },
-        { code: 'BCA402', name: 'Python Programming', credits: 4, teacher: 'Ms. Neha Gupta' },
-        { code: 'BCA403', name: 'Software Testing', credits: 3, teacher: 'Mr. Karan Joshi' },
-        { code: 'BCA404', name: 'Web Development', credits: 4, teacher: 'Ms. Priya Sharma' },
-        { code: 'BCA405', name: 'Software Lab IV', credits: 2, teacher: 'Mr. Karan Joshi' }
-      ],
-      5: [
-        { code: 'BCA501', name: 'Computer Networks', credits: 4, teacher: 'Dr. Amit Singh' },
-        { code: 'BCA502', name: 'IT and Environment', credits: 3, teacher: 'Prof. Anita Desai' },
-        { code: 'BCA503', name: 'Java Programming Using Linux', credits: 4, teacher: 'Dr. Rajesh Kumar' },
-        { code: 'BCA504', name: 'Open Course', credits: 3, teacher: 'Various Faculty' },
-        { code: 'BCA505', name: 'Mini Project', credits: 4, teacher: 'Project Guide' },
-        { code: 'BCA506', name: 'Software Lab V', credits: 2, teacher: 'Mr. Karan Joshi' }
-      ],
-      6: [
-        { code: 'BCA601', name: 'Artificial Intelligence', credits: 4, teacher: 'Dr. Rajesh Kumar' },
-        { code: 'BCA602', name: 'Cyber Security', credits: 4, teacher: 'Dr. Amit Singh' },
-        { code: 'BCA603', name: 'Cloud Computing', credits: 4, teacher: 'Prof. Vikram Mehta' },
-        { code: 'BCA604', name: 'Mobile Application Development', credits: 4, teacher: 'Ms. Neha Gupta' },
-        { code: 'BCA605', name: 'Project Work', credits: 6, teacher: 'Project Guide' }
-      ]
-    },
-    'BBA': {
-      1: [
-        { code: 'BBA101', name: 'Business Accounting', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'BBA102', name: 'Business Mathematics', credits: 4, teacher: 'Dr. Kavita Nair' },
-        { code: 'BBA103', name: 'Principles of Management', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'BBA104', name: 'Business Statistics', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'BBA105', name: 'Global Business Environment', credits: 3, teacher: 'Dr. Arun Malhotra' }
-      ],
-      2: [
-        { code: 'BBA201', name: 'Business Communication', credits: 3, teacher: 'Ms. Priya Sharma' },
-        { code: 'BBA202', name: 'Cost Accounting', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'BBA203', name: 'Mathematics for Management', credits: 4, teacher: 'Dr. Kavita Nair' },
-        { code: 'BBA204', name: 'Statistics for Management', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'BBA205', name: 'English', credits: 3, teacher: 'Ms. Priya Sharma' }
-      ],
-      3: [
-        { code: 'BBA301', name: 'Business Laws', credits: 4, teacher: 'Dr. Arun Malhotra' },
-        { code: 'BBA302', name: 'Human Resource Management', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'BBA303', name: 'Marketing Management', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'BBA304', name: 'Research Methodology', credits: 3, teacher: 'Dr. Kavita Nair' },
-        { code: 'BBA305', name: 'Corporate Accounting', credits: 4, teacher: 'Prof. Ramesh Iyer' }
-      ],
-      4: [
-        { code: 'BBA401', name: 'Informatics for Management', credits: 4, teacher: 'Ms. Neha Gupta' },
-        { code: 'BBA402', name: 'Corporate Law', credits: 4, teacher: 'Dr. Arun Malhotra' },
-        { code: 'BBA403', name: 'Financial Management', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'BBA404', name: 'Managerial Economics', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'BBA405', name: 'Entrepreneurship', credits: 3, teacher: 'Prof. Meera Reddy' }
-      ],
-      5: [
-        { code: 'BBA501', name: 'Industrial Relations', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'BBA502', name: 'Intellectual Property Rights', credits: 3, teacher: 'Dr. Arun Malhotra' },
-        { code: 'BBA503', name: 'Operations Management', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'BBA504', name: 'Environment Science', credits: 3, teacher: 'Dr. Kavita Nair' },
-        { code: 'BBA505', name: 'Capital Market', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'BBA506', name: 'Organisational Behaviour', credits: 4, teacher: 'Dr. Sunil Kapoor' }
-      ],
-      6: [
-        { code: 'BBA601', name: 'Advertising and Salesmanship', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'BBA602', name: 'Communication Skills', credits: 3, teacher: 'Ms. Priya Sharma' },
-        { code: 'BBA603', name: 'Investment Management', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'BBA604', name: 'Strategic Management', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'BBA605', name: 'Banking Management', credits: 4, teacher: 'Prof. Ramesh Iyer' }
-      ]
-    },
-    'B.Com': {
-      1: [
-        { code: 'COM101', name: 'Corporate Regulations', credits: 4, teacher: 'Dr. Arun Malhotra' },
-        { code: 'COM102', name: 'Business Studies', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'COM103', name: 'Financial Accounting 1', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM104', name: 'Banking and Insurance', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM105', name: 'English', credits: 3, teacher: 'Ms. Priya Sharma' }
-      ],
-      2: [
-        { code: 'COM201', name: 'Business Management', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'COM202', name: 'Business Regulatory Framework', credits: 4, teacher: 'Dr. Arun Malhotra' },
-        { code: 'COM203', name: 'Financial Accounting 2', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM204', name: 'Business Decisions', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM205', name: 'Quantitative Techniques', credits: 4, teacher: 'Dr. Kavita Nair' }
-      ],
-      3: [
-        { code: 'COM301', name: 'Corporate Accounting 1', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM302', name: 'Financial Markets', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM303', name: 'Marketing Management', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'COM304', name: 'Quantitative Techniques 1', credits: 4, teacher: 'Dr. Kavita Nair' },
-        { code: 'COM305', name: 'Goods and Services Tax', credits: 4, teacher: 'Dr. Arun Malhotra' }
-      ],
-      4: [
-        { code: 'COM401', name: 'Corporate Accounting 2', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM402', name: 'Entrepreneurship Development', credits: 4, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'COM403', name: 'Financial Services', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM404', name: 'Quantitative Techniques 2', credits: 4, teacher: 'Dr. Kavita Nair' },
-        { code: 'COM405', name: 'Information Technology', credits: 4, teacher: 'Ms. Neha Gupta' }
-      ],
-      5: [
-        { code: 'COM501', name: 'Cost Accounting 1', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM502', name: 'Brand Management', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM503', name: 'Computer Fundamentals', credits: 4, teacher: 'Ms. Neha Gupta' },
-        { code: 'COM504', name: 'E-Commerce', credits: 3, teacher: 'Dr. Sunil Kapoor' },
-        { code: 'COM505', name: 'Environment Management', credits: 3, teacher: 'Dr. Kavita Nair' },
-        { code: 'COM506', name: 'Programming in C', credits: 4, teacher: 'Mr. Karan Joshi' }
-      ],
-      6: [
-        { code: 'COM601', name: 'Cost Accounting 2', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM602', name: 'Management Accounting', credits: 4, teacher: 'Prof. Ramesh Iyer' },
-        { code: 'COM603', name: 'Advertisement and Sales', credits: 4, teacher: 'Prof. Meera Reddy' },
-        { code: 'COM604', name: 'Auditing and Assurance', credits: 4, teacher: 'Dr. Arun Malhotra' },
-        { code: 'COM605', name: 'Income Tax', credits: 4, teacher: 'Dr. Arun Malhotra' }
-      ]
-    }
-  }
 
   useEffect(() => {
     if (!user) {
@@ -156,22 +19,38 @@ export default function Subjects() {
       return
     }
 
-    // Get subjects based on student's department and semester
-    const studentDept = user.department || 'BCA'
-    const studentSem = parseInt(user.semester) || 1
-    
-    const deptSubjects = subjectDatabase[studentDept]
-    if (deptSubjects && deptSubjects[studentSem]) {
-      setSubjects(deptSubjects[studentSem])
-    }
-    
-    setLoading(false)
+    fetchSubjects(user.semester || null)
   }, [])
+
+  const fetchSubjects = async (semester) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      const result = await api.getMarks(semester)
+      
+      if (result.success && result.data) {
+        setSubjects(result.data.marks || [])
+      } else {
+        setError(result.message || 'Failed to fetch subjects')
+      }
+    } catch (err) {
+      console.error('Error fetching subjects:', err)
+      setError(err.message || 'Failed to fetch subjects')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSemesterChange = (semester) => {
+    setSelectedSemester(semester)
+    fetchSubjects(semester)
+  }
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-slate-800 dark:text-white">Loading...</div>
+        <div className="text-2xl text-slate-800 dark:text-white">Loading subjects...</div>
       </div>
     )
   }
@@ -205,10 +84,39 @@ export default function Subjects() {
         </div>
       </header>
 
+      {/* Semester Filter */}
+      <div className="mb-6 flex gap-2 flex-wrap">
+        <button
+          onClick={() => handleSemesterChange(null)}
+          className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+            selectedSemester === null
+              ? 'bg-indigo-500 text-white'
+              : 'bg-white/30 dark:bg-gray-800/30 text-slate-700 dark:text-slate-300 hover:bg-indigo-500/20'
+          }`}
+        >
+          Current
+        </button>
+        {[1, 2, 3, 4, 5, 6].map((sem) => (
+          <button
+            key={sem}
+            onClick={() => handleSemesterChange(sem)}
+            className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+              selectedSemester === sem
+                ? 'bg-indigo-500 text-white'
+                : 'bg-white/30 dark:bg-gray-800/30 text-slate-700 dark:text-slate-300 hover:bg-indigo-500/20'
+            }`}
+          >
+            Sem {sem}
+          </button>
+        ))}
+      </div>
+
       <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 mb-8 text-white shadow-2xl">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-2">Semester {user?.semester || '1'} - {user?.department || 'BCA'}</h2>
+            <h2 className="text-2xl font-bold mb-2">
+              Semester {selectedSemester || user?.semester || '1'} - {user?.department || 'Department'}
+            </h2>
             <p className="text-indigo-100">Current semester courses</p>
           </div>
           <div className="text-right">
@@ -218,13 +126,26 @@ export default function Subjects() {
         </div>
       </div>
 
-      {/* Subjects Grid */}
-      {subjects.length === 0 ? (
+      {/* Error State */}
+      {error && (
         <div className="text-center py-12">
-          <i className="fas fa-book-open text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
-          <p className="text-slate-600 dark:text-slate-400 text-lg">No subjects found for your semester</p>
+          <div className="text-xl text-red-600 dark:text-red-400 mb-4">{error}</div>
+          <button
+            onClick={() => fetchSubjects(selectedSemester)}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Retry
+          </button>
         </div>
-      ) : (
+      )}
+
+      {/* Subjects Grid */}
+      {!error && subjects.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-6xl text-slate-300 dark:text-slate-600 mb-4">📚</div>
+          <p className="text-slate-600 dark:text-slate-400 text-lg">No subjects found for this semester</p>
+        </div>
+      ) : !error && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {subjects.map((subject, index) => (
             <motion.div
@@ -236,21 +157,57 @@ export default function Subjects() {
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center">
-                  <i className="fas fa-book text-2xl text-indigo-500"></i>
+                  <div className="text-2xl">📖</div>
                 </div>
-                <span className="px-3 py-1 bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-full text-sm font-semibold">
-                  {subject.credits} Credits
-                </span>
+                <div className="flex flex-col items-end gap-2">
+                  <span className="px-3 py-1 bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-full text-sm font-semibold">
+                    {subject.credit_hours} Credits
+                  </span>
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    subject.letter_grade === 'A+' || subject.letter_grade === 'A' || subject.letter_grade === 'A-'
+                      ? 'bg-green-500/20 text-green-600 dark:text-green-400'
+                      : subject.letter_grade === 'B+' || subject.letter_grade === 'B' || subject.letter_grade === 'B-'
+                      ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
+                      : subject.letter_grade === 'C+' || subject.letter_grade === 'C' || subject.letter_grade === 'C-'
+                      ? 'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400'
+                      : 'bg-red-500/20 text-red-600 dark:text-red-400'
+                  }`}>
+                    Grade: {subject.letter_grade}
+                  </span>
+                </div>
               </div>
+              
               <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
-                {subject.name}
+                {subject.subject_name}
               </h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-3">
-                {subject.code}
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
+                {subject.subject_code}
               </p>
-              <div className="flex items-center text-slate-600 dark:text-slate-400 text-sm">
-                <i className="fas fa-user-tie mr-2"></i>
-                {subject.teacher}
+
+              {/* Marks Breakdown */}
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="text-center p-2 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Internal</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-white">{subject.internal_marks}</p>
+                </div>
+                <div className="text-center p-2 bg-purple-500/10 dark:bg-purple-500/20 rounded-lg">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">External</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-white">{subject.external_marks}</p>
+                </div>
+                <div className="text-center p-2 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-lg">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Total</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-white">{subject.total_marks}</p>
+                </div>
+              </div>
+
+              {/* Grade Details */}
+              <div className="flex justify-between items-center pt-3 border-t border-slate-300 dark:border-slate-600">
+                <div className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="font-semibold">GP:</span> {subject.grade_point?.toFixed(2)}
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="font-semibold">CP:</span> {subject.credit_points?.toFixed(2)}
+                </div>
               </div>
             </motion.div>
           ))}

@@ -6,12 +6,19 @@
  */
 
 class Database {
-    // Database credentials
-    private $host = "localhost";
-    private $db_name = "studentportal";
-    private $username = "root";
-    private $password = "";
+    // Database credentials - use environment variables if available
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     private $charset = "utf8mb4";
+    
+    public function __construct() {
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->db_name = getenv('DB_NAME') ?: 'studentportal';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+    }
     
     public $conn;
 

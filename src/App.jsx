@@ -14,6 +14,8 @@ import AdminTeachers from './pages/admin/AdminTeachers'
 import AdminNotices from './pages/admin/AdminNotices'
 import AdminFeeManagement from './pages/admin/AdminFeeManagement'
 import AdminCourses from './pages/admin/AdminCourses'
+import AdminSessions from './pages/admin/AdminSessions'
+import AdminReports from './pages/admin/AdminReports'
 import TeacherAttendance from './pages/TeacherAttendance'
 import TeacherStudentList from './pages/TeacherStudentList'
 import TeacherNotice from './pages/TeacherNotice'
@@ -59,13 +61,15 @@ function App() {
           <Route path="/admin/notices" element={<ProtectedRoute allowedRoles={['admin']}><AdminNotices /></ProtectedRoute>} />
           <Route path="/admin/fee-management" element={<ProtectedRoute allowedRoles={['admin']}><AdminFeeManagement /></ProtectedRoute>} />
           <Route path="/admin/courses" element={<ProtectedRoute allowedRoles={['admin']}><AdminCourses /></ProtectedRoute>} />
+          <Route path="/admin/sessions" element={<ProtectedRoute allowedRoles={['admin']}><AdminSessions /></ProtectedRoute>} />
+          <Route path="/admin/reports" element={<ProtectedRoute allowedRoles={['admin']}><AdminReports /></ProtectedRoute>} />
           
           {/* Teacher Routes */}
-          <Route path="/teacher/dashboard" element={<ProtectedRoute allowedRoles={['staff']}><TeacherDashboard /></ProtectedRoute>} />
-          <Route path="/teacher/attendance" element={<ProtectedRoute allowedRoles={['staff']}><TeacherAttendance /></ProtectedRoute>} />
-          <Route path="/teacher/students" element={<ProtectedRoute allowedRoles={['staff']}><TeacherStudentList /></ProtectedRoute>} />
-          <Route path="/teacher/notices" element={<ProtectedRoute allowedRoles={['staff']}><TeacherNotice /></ProtectedRoute>} />
-          <Route path="/teacher/marks" element={<ProtectedRoute allowedRoles={['staff']}><TeacherMarks /></ProtectedRoute>} />
+          <Route path="/teacher/dashboard" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherDashboard /></ProtectedRoute>} />
+          <Route path="/teacher/attendance" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherAttendance /></ProtectedRoute>} />
+          <Route path="/teacher/students" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherStudentList /></ProtectedRoute>} />
+          <Route path="/teacher/notices" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherNotice /></ProtectedRoute>} />
+          <Route path="/teacher/marks" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherMarks /></ProtectedRoute>} />
         </Routes>
       </AnimatePresence>
     </Router>

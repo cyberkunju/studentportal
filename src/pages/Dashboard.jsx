@@ -7,9 +7,13 @@ import api from '../services/api'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [gpa, setGpa] = useState(0)
+  const [cgpa, setCgpa] = useState(0)
+  const [attendancePercent, setAttendancePercent] = useState(0)
   const [notices, setNotices] = useState([])
+  const [upcomingFees, setUpcomingFees] = useState([])
   const user = api.getCurrentUser()
 
   useEffect(() => {
@@ -18,35 +22,72 @@ export default function Dashboard() {
       return
     }
 
-    const fetchStats = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const result = await api.getDashboardStats(user.student_id)
-        if (result.success) {
-          setStats(result.data)
+        setLoading(true)
+        setError(null)
+
+        const [marksResult, attendanceResult, noticesResult, feesResult] = await Promise.all([
+          api.getMarks().catch(err => ({ success: false, error: err.message })),
+          api.getAttendance().catch(err => ({ success: false, error: err.message })),
+          api.getAllNotices().catch(err => ({ success: false, error: err.message })),
+          api.getFees().catch(err => ({ success: false, error: err.message }))
+        ])
+
+        if (marksResult.success && marksResult.data) {
+          const summary = marksResult.data.summary || {}
+          setGpa(summary.gpa || 0)
+          setCgpa(summary.cgpa || 0)
         }
-      } catch (error) {
-        console.error('Error fetching stats:', error)
+
+        if (attendanceResult.success && attendanceResult.data) {
+          const attendanceData = attendanceResult.data.attendance || []
+          if (attendanceData.length > 0) {
+            const avgPercentage = attendanceData.reduce((sum, item) => sum + parseFloat(item.percentage || 0), 0) / attendanceData.length
+            setAttendancePercent(avgPercentage.toFixed(1))
+          }
+        }
+
+        if (noticesResult.success && noticesResult.data) {
+          setNotices((noticesResult.data.notices || []).slice(0, 3))
+        }
+
+        if (feesResult.success && feesResult.data) {
+          const unpaidFees = (feesResult.data.fees || []).filter(fee => fee.payment_status !== 'completed')
+          setUpcomingFees(unpaidFees.slice(0, 2))
+        }
+
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err)
+        setError('Failed to load dashboard data')
       } finally {
         setLoading(false)
       }
     }
 
-    fetchStats()
-    
-    // Load notices from localStorage
-    const loadNotices = () => {
-      const storedNotices = JSON.parse(localStorage.getItem('notices') || '[]')
-      // Get latest 3 notices
-      setNotices(storedNotices.slice(0, 3))
-    }
-    
-    loadNotices()
+    fetchDashboardData()
   }, [])
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-slate-800 dark:text-white">Loading...</div>
+        <div className="text-2xl text-slate-800 dark:text-white">Loading dashboard...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl text-red-600 dark:text-red-400 mb-4">{error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     )
   }
@@ -107,145 +148,193 @@ export default function Dashboard() {
           </div>
 
           {/* Stats Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Academic Progress */}
-            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer">
-              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">
-                Academic Progress
-              </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Academic Progress - GPA */}
+            <div 
+              onClick={() => navigate('/result')}
+              className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer"
+            >
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Current GPA</h3>
               <div className="flex flex-col items-center">
-                <div className="relative w-36 h-36">
-                  <svg className="transform -rotate-90" width="140" height="140">
-                    <circle
-                      cx="70"
-                      cy="70"
-                      r="60"
-                      fill="none"
-                      stroke="rgba(0,0,0,0.1)"
-                      strokeWidth="12"
-                    />
-                    <circle
-                      cx="70"
-                      cy="70"
-                      r="60"
-                      fill="none"
-                      stroke="#3b82f6"
-                      strokeWidth="12"
-                      strokeDasharray="377"
-                      strokeDashoffset="75"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-4xl font-bold text-slate-800 dark:text-white">{stats?.gpa || '0.0'}</span>
-                    <span className="text-sm text-slate-600 dark:text-slate-400">GPA</span>
-                  </div>
-                </div>
-                <p className="mt-4 text-center text-slate-600 dark:text-slate-400">
-                  Great job! Keep up the excellent work.
-                </p>
+                <span className="text-5xl font-bold text-indigo-600 dark:text-indigo-400">{gpa.toFixed(2)}</span>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Semester GPA</p>
               </div>
             </div>
 
-            {/* Upcoming Assignments */}
-            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer">
-              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">
-                Upcoming Assignments
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-semibold text-slate-800 dark:text-white">CS101: Final Project</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Due: May 15, 2024</p>
-                  </div>
-                  <a href="#" className="text-blue-500 text-sm hover:underline">View</a>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-semibold text-slate-800 dark:text-white">ENG203: Essay on Modernism</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Due: May 20, 2024</p>
-                  </div>
-                  <a href="#" className="text-blue-500 text-sm hover:underline">View</a>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-semibold text-slate-800 dark:text-white">MATH305: Problem Set 5</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Due: May 22, 2024</p>
-                  </div>
-                  <a href="#" className="text-blue-500 text-sm hover:underline">View</a>
-                </div>
+            {/* CGPA */}
+            <div 
+              onClick={() => navigate('/analysis')}
+              className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-purple-500/10 dark:hover:bg-purple-500/20 transition-all cursor-pointer"
+            >
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Cumulative CGPA</h3>
+              <div className="flex flex-col items-center">
+                <span className="text-5xl font-bold text-purple-600 dark:text-purple-400">{cgpa.toFixed(2)}</span>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Overall Performance</p>
+              </div>
+            </div>
+
+            {/* Attendance */}
+            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-green-500/10 dark:hover:bg-green-500/20 transition-all cursor-pointer">
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Attendance</h3>
+              <div className="flex flex-col items-center">
+                <span className="text-5xl font-bold text-green-600 dark:text-green-400">{attendancePercent}%</span>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Overall Average</p>
               </div>
             </div>
           </div>
 
-          {/* College Announcements */}
-          <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer">
-            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">
-              College Announcements
-            </h3>
-            <div className="space-y-2 text-slate-600 dark:text-slate-400">
-              <p> Library hours extended during finals week</p>
-              <p> Summer course registration is now open</p>
-              <p> Campus-wide power outage on May 25th from 1 AM to 5 AM</p>
+          {/* Upcoming Fees */}
+          {upcomingFees.length > 0 && (
+            <div 
+              onClick={() => navigate('/payments')}
+              className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-amber-500/10 dark:hover:bg-amber-500/20 transition-all cursor-pointer"
+            >
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Pending Fees</h3>
+              <div className="space-y-3">
+                {upcomingFees.map((fee, index) => (
+                  <div key={index} className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">{fee.fee_name}</h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Due: {new Date(fee.due_date).toLocaleDateString()}
+                        {fee.current_late_fine > 0 && (
+                          <span className="ml-2 text-red-600 dark:text-red-400">
+                            +₹{fee.current_late_fine} late fine
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                    <span className="font-bold text-slate-800 dark:text-white">
+                      ₹{parseFloat(fee.amount) + parseFloat(fee.current_late_fine || 0)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Quick Actions */}
+          <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Quick Actions</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <button
+                onClick={() => navigate('/result')}
+                className="p-4 bg-blue-500/20 hover:bg-blue-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">📊</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">View Results</div>
+              </button>
+              <button
+                onClick={() => navigate('/subjects')}
+                className="p-4 bg-purple-500/20 hover:bg-purple-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">📚</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Subjects</div>
+              </button>
+              <button
+                onClick={() => navigate('/payments')}
+                className="p-4 bg-green-500/20 hover:bg-green-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">💳</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Payments</div>
+              </button>
+              <button
+                onClick={() => navigate('/notice')}
+                className="p-4 bg-amber-500/20 hover:bg-amber-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">📢</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Notices</div>
+              </button>
+            </div>
+          </div>
+
+          {/* Download Documents */}
+          <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Download Documents</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <button
+                onClick={async () => {
+                  try {
+                    await api.downloadIDCard()
+                    alert('✅ ID Card downloaded successfully!')
+                  } catch (error) {
+                    alert(`❌ Failed to download ID Card: ${error.message}`)
+                  }
+                }}
+                className="p-4 bg-indigo-500/20 hover:bg-indigo-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">🪪</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Download ID Card</div>
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await api.downloadPerformanceReport()
+                    alert('✅ Performance Report downloaded successfully!')
+                  } catch (error) {
+                    alert(`❌ Failed to download report: ${error.message}`)
+                  }
+                }}
+                className="p-4 bg-teal-500/20 hover:bg-teal-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">📄</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Performance Report</div>
+              </button>
+              <button
+                onClick={() => navigate('/payments')}
+                className="p-4 bg-cyan-500/20 hover:bg-cyan-500/30 rounded-xl transition-all text-center"
+              >
+                <div className="text-2xl mb-2">🧾</div>
+                <div className="text-sm font-semibold text-slate-800 dark:text-white">Payment Receipts</div>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Notifications Sidebar */}
         <div className="space-y-4">
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Notifications</h3>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">Recent Notices</h3>
           
           {notices.length === 0 ? (
             <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg text-center">
-              <i className="fas fa-bell-slash text-4xl text-slate-400 mb-3"></i>
-              <p className="text-slate-600 dark:text-slate-400">No notifications yet</p>
+              <div className="text-4xl text-slate-400 mb-3">🔔</div>
+              <p className="text-slate-600 dark:text-slate-400">No notices yet</p>
             </div>
           ) : (
-            notices.map((notice, index) => {
-              // Category-based icons and colors (matching Notice Board)
-              const categoryStyles = {
-                general: { icon: 'fas fa-info-circle', bgColor: 'bg-purple-500', hoverColor: 'hover:bg-purple-500/10 dark:hover:bg-purple-500/20' },
-                academic: { icon: 'fas fa-graduation-cap', bgColor: 'bg-blue-500', hoverColor: 'hover:bg-blue-500/10 dark:hover:bg-blue-500/20' },
-                event: { icon: 'fas fa-calendar-alt', bgColor: 'bg-green-500', hoverColor: 'hover:bg-green-500/10 dark:hover:bg-green-500/20' },
-                exam: { icon: 'fas fa-file-alt', bgColor: 'bg-orange-500', hoverColor: 'hover:bg-orange-500/10 dark:hover:bg-orange-500/20' },
-                holiday: { icon: 'fas fa-umbrella-beach', bgColor: 'bg-teal-500', hoverColor: 'hover:bg-teal-500/10 dark:hover:bg-teal-500/20' },
-                sports: { icon: 'fas fa-futbol', bgColor: 'bg-red-500', hoverColor: 'hover:bg-red-500/10 dark:hover:bg-red-500/20' }
-              }
-              
-              // Get category style or default to general
-              const style = categoryStyles[notice.category] || categoryStyles.general
-              const iconClass = style.icon
-              const bgColor = style.bgColor
-              const hoverColor = style.hoverColor
-              
-              // Truncate content for preview
-              const contentPreview = notice.content.length > 100 
-                ? notice.content.substring(0, 100) + '...' 
-                : notice.content
-              
-              return (
-                <div 
-                  key={index}
-                  onClick={() => navigate('/notice')}
-                  className={`bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-lg ${hoverColor} transition-all cursor-pointer`}
-                >
-                  <div className="flex gap-3">
-                    <div className={`w-10 h-10 rounded-full ${bgColor} flex items-center justify-center text-white flex-shrink-0`}>
-                      <i className={iconClass}></i>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-slate-800 dark:text-white mb-1 truncate">
-                        {notice.title}
-                      </h4>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
-                        {contentPreview}
-                      </p>
-                    </div>
-                    <i className="fas fa-chevron-right text-slate-400 flex-shrink-0"></i>
+            notices.map((notice, index) => (
+              <div 
+                key={index}
+                onClick={() => navigate('/notice')}
+                className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-lg hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all cursor-pointer"
+              >
+                <div className="flex gap-3">
+                  <div className="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white flex-shrink-0">
+                    📢
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-slate-800 dark:text-white mb-1 truncate">
+                      {notice.title}
+                    </h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                      {notice.content?.substring(0, 100)}
+                      {notice.content?.length > 100 && '...'}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
+                      {new Date(notice.created_at).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
-              )
-            })
+              </div>
+            ))
+          )}
+
+          {notices.length > 0 && (
+            <button
+              onClick={() => navigate('/notice')}
+              className="w-full py-2 text-center text-blue-500 hover:text-blue-600 font-semibold"
+            >
+              View All Notices →
+            </button>
           )}
         </div>
       </div>

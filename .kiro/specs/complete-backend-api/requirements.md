@@ -14,6 +14,19 @@ The Student Portal Management System requires a complete backend API implementat
 - **API Endpoint**: A specific URL path that handles HTTP requests and returns JSON responses
 - **CRUD Operations**: Create, Read, Update, Delete database operations
 - **Role**: User type (student, teacher, admin) that determines access permissions
+- **Student**: A user with role='student' who can view their own academic data
+- **Teacher**: A user with role='teacher' who can manage attendance and marks for assigned students
+- **Admin**: A user with role='admin' who has full system management privileges
+- **Session**: An academic year period with start and end dates
+- **Semester**: A subdivision of academic year, numbered 1 through 6
+- **Grade Point (GP)**: Numerical value assigned to letter grade (0.00 to 4.00)
+- **Credit Point (CP)**: Product of grade point and credit hours for a subject
+- **GPA**: Grade Point Average for a single semester
+- **CGPA**: Cumulative Grade Point Average across all semesters
+- **Virtual ID Card**: Digital student identification card with photo, student details, and QR code
+- **PDF Document**: Portable Document Format file generated server-side for download
+- **Receipt**: Payment confirmation document with transaction details and receipt number
+- **Performance Report**: Academic transcript showing marks, grades, GPA, and CGPA for specified semesters
 
 ## Requirements
 
@@ -71,7 +84,7 @@ The Student Portal Management System requires a complete backend API implementat
 
 #### Acceptance Criteria
 
-1. WHEN a user uploads a profile image, THE System SHALL validate file type (jpeg, png, gif), validate file size (maximum 5MB), and save file to uploads/profiles directory
+1. WHEN a user uploads a profile image, THE System SHALL validate file type is one of (jpeg, png, gif), validate file size does not exceed 5242880 bytes (5MB), and save file to uploads/profiles directory
 2. WHEN a file upload succeeds, THE System SHALL generate unique filename using timestamp and random string to prevent conflicts
 3. IF a file upload fails validation, THEN THE System SHALL return HTTP 400 Bad Request with specific error message indicating validation failure reason
 4. WHEN a file is successfully uploaded, THE System SHALL return file path in JSON response for storage in database
@@ -98,8 +111,8 @@ The Student Portal Management System requires a complete backend API implementat
 1. WHEN marks are entered or updated, THE System SHALL calculate total_marks as sum of internal_marks and external_marks
 2. WHEN total_marks is calculated, THE System SHALL determine letter_grade based on predefined scale (A+ for 90-100, A for 85-89, etc.)
 3. WHEN letter_grade is determined, THE System SHALL assign corresponding grade_point (4.00 for A+, 3.75 for A, etc.)
-4. WHEN calculating GPA for a semester, THE System SHALL compute weighted average of grade_points multiplied by credit_hours divided by total credit_hours
-5. WHEN calculating CGPA, THE System SHALL compute weighted average of all semesters' GPAs
+4. WHEN calculating GPA for a semester, THE System SHALL compute weighted average using formula: sum of (grade_point × credit_hours) divided by sum of credit_hours, rounded to 2 decimal places
+5. WHEN calculating CGPA, THE System SHALL compute weighted average using formula: sum of (semester_GPA × semester_credits) divided by sum of all semester_credits, rounded to 2 decimal places
 
 ### Requirement 8: Notice and Notification System
 
@@ -122,7 +135,7 @@ The Student Portal Management System requires a complete backend API implementat
 1. WHEN an admin creates a new session, THE System SHALL insert session record with session_name, start_year, end_year, start_date, and end_date
 2. WHEN a session is activated, THE System SHALL set is_active to true for new session and set is_active to false for all other sessions
 3. WHERE data is filtered by session, THE System SHALL use the currently active session unless specific session_id is provided
-4. WHEN semester data is created, THE System SHALL validate semester_number is between 1 and 6
+4. WHEN semester data is created, THE System SHALL validate semester_number is an integer between 1 and 6 inclusive
 5. WHERE semester dates are set, THE System SHALL validate start_date is before end_date and dates fall within parent session dates
 
 ### Requirement 10: Reporting and Analytics
@@ -131,8 +144,56 @@ The Student Portal Management System requires a complete backend API implementat
 
 #### Acceptance Criteria
 
-1. WHEN a teacher requests attendance report, THE System SHALL retrieve attendance data grouped by student with calculated present_count, absent_count, and attendance_percentage
+1. WHEN a teacher requests attendance report, THE System SHALL retrieve attendance data grouped by student with calculated present_count, absent_count, and attendance_percentage rounded to 2 decimal places
 2. WHEN an admin requests performance report, THE System SHALL retrieve marks data with calculated averages grouped by semester, department, or subject
 3. WHERE a report includes date range filter, THE System SHALL filter records where date is between start_date and end_date
 4. WHEN generating financial reports, THE System SHALL retrieve payment data with calculated total_collected, total_pending, and total_late_fines
 5. WHERE analytics include trends, THE System SHALL calculate month-over-month or semester-over-semester percentage changes
+
+### Requirement 11: Virtual ID Card Generation
+
+**User Story:** As a student, I want to download my virtual ID card as a PDF, so that I can use it for identification purposes and keep a digital copy.
+
+#### Acceptance Criteria
+
+1. WHEN a student requests their virtual ID card, THE System SHALL retrieve student data including full_name, student_id, department, semester, enrollment_date, and profile_image from database
+2. WHEN generating the ID card PDF, THE System SHALL use TCPDF or similar library to create PDF document with dimensions 85.6mm × 53.98mm (standard ID card size)
+3. WHEN creating ID card layout, THE System SHALL include institution logo, student photo, student_id as barcode or QR code, full name, department, semester, and valid_until date
+4. WHEN QR code is generated, THE System SHALL encode student_id and verification URL in QR code data for scanning validation
+5. WHEN PDF generation completes, THE System SHALL return PDF file with Content-Type application/pdf and Content-Disposition attachment with filename format "ID_Card_{student_id}.pdf"
+
+### Requirement 12: Fee Receipt Download
+
+**User Story:** As a student, I want to download official fee payment receipts as PDF, so that I have proof of payment for my records.
+
+#### Acceptance Criteria
+
+1. WHEN a student requests a fee receipt for a payment, THE System SHALL retrieve payment record from payments table including receipt_number, amount, payment_date, payment_method, and fee_type
+2. WHEN generating receipt PDF, THE System SHALL include institution header with name and address, receipt_number, payment_date, student details (name, student_id, department, semester), fee breakdown with amount, late_fine if applicable, total_amount, payment_method, and transaction_id
+3. WHEN calculating receipt totals, THE System SHALL display base_amount, late_fine_amount, and total_amount with currency symbol and 2 decimal places
+4. WHEN receipt includes multiple fee items, THE System SHALL list each fee_type with corresponding amount in tabular format
+5. WHEN PDF generation completes, THE System SHALL return PDF file with filename format "Receipt_{receipt_number}_{student_id}.pdf" and set appropriate headers for download
+
+### Requirement 13: Performance Report Download
+
+**User Story:** As a student, I want to download my academic performance report as PDF, so that I can share my grades and GPA with others or keep for my records.
+
+#### Acceptance Criteria
+
+1. WHEN a student requests performance report, THE System SHALL retrieve all marks records for the student grouped by semester with calculated GPA per semester and overall CGPA
+2. WHEN generating performance report PDF, THE System SHALL include student header with name, student_id, department, enrollment_date, and current semester
+3. WHEN displaying marks data, THE System SHALL show table for each semester containing subject_code, subject_name, credit_hours, internal_marks, external_marks, total_marks, letter_grade, and grade_point
+4. WHEN calculating semester summary, THE System SHALL display total_credits, earned_credits, semester_GPA, and cumulative_CGPA at end of each semester section
+5. WHEN PDF generation completes, THE System SHALL return PDF file with filename format "Performance_Report_{student_id}_{date}.pdf" with generated_date timestamp in footer
+
+### Requirement 14: PDF Generation Infrastructure
+
+**User Story:** As a system administrator, I want a robust PDF generation system, so that all downloadable documents are consistently formatted and reliably generated.
+
+#### Acceptance Criteria
+
+1. WHEN any PDF generation is requested, THE System SHALL use TCPDF library version 6.x or higher with UTF-8 encoding support
+2. WHEN creating PDF documents, THE System SHALL apply consistent styling with institution branding including logo, colors, and fonts
+3. IF PDF generation fails due to missing data, THEN THE System SHALL return HTTP 400 Bad Request with error message indicating missing required fields
+4. WHEN PDF file is generated, THE System SHALL save temporary copy to uploads/temp directory with unique filename and auto-delete files older than 24 hours
+5. WHERE PDF includes images, THE System SHALL validate image file exists and is readable before embedding in PDF document

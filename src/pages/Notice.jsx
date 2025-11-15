@@ -19,9 +19,9 @@ export default function Notice() {
 
     const fetchNotices = async () => {
       try {
-        const result = await api.getNotices()
-        if (result.success) {
-          setNotices(result.data || [])
+        const result = await api.getAllNotices()
+        if (result.success && result.data) {
+          setNotices(result.data.notices || [])
         }
       } catch (error) {
         console.error('Error fetching notices:', error)
