@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import ThemeToggle from '../components/ThemeToggle'
+import Icon from '../components/Icon'
 import api from '../services/api'
 
 export default function TeacherMarks() {
@@ -167,17 +168,17 @@ export default function TeacherMarks() {
                 navigate('/teacher/dashboard')
               }
             }}
-            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all"
+            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-picton-blue/10 transition-all"
           >
-            <div>←</div>
+            <Icon name="arrowLeft" size={20} className="text-slate-800 dark:text-white" />
           </button>
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Marks Management</h1>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name}</span>
-          <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white">
-            <div className="text-xl">✍️</div>
+          <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white">
+            <Icon name="edit" size={20} />
           </div>
         </div>
       </header>
@@ -185,11 +186,11 @@ export default function TeacherMarks() {
       <p className="text-slate-600 dark:text-slate-400 mb-8">Enter marks for students (Internal: 30, External: 70)</p>
 
       {/* Progress Banner */}
-      <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 mb-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-br from-picton-blue to-baby-blue rounded-2xl p-6 mb-8 text-white shadow-2xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-              <div className="text-3xl">✍️</div>
+              <Icon name="edit" size={32} />
             </div>
             <div>
               <h2 className="text-2xl font-bold">
@@ -216,7 +217,7 @@ export default function TeacherMarks() {
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Select Subject</h2>
           {subjects.length === 0 ? (
             <div className="text-center py-12 bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
-              <div className="text-6xl text-slate-300 dark:text-slate-600 mb-4">📚</div>
+              <Icon name="book" size={64} className="text-slate-300 dark:text-slate-600 mx-auto mb-4" />
               <p className="text-slate-600 dark:text-slate-400 text-lg">No subjects assigned</p>
             </div>
           ) : (
@@ -226,19 +227,19 @@ export default function TeacherMarks() {
                   key={subject.id}
                   whileHover={{ scale: 1.02, y: -5 }}
                   onClick={() => handleSubjectSelect(subject)}
-                  className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-green-500/10 dark:hover:bg-green-500/20 transition-all"
+                  className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-picton-blue/10 transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                      <div className="text-2xl">📖</div>
+                    <div className="w-12 h-12 rounded-full bg-picton-blue/20 flex items-center justify-center">
+                      <Icon name="book" size={24} className="text-picton-blue" />
                     </div>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold">
+                    <span className="px-3 py-1 bg-picton-blue/20 text-picton-blue rounded-full text-sm font-semibold">
                       Sem {subject.semester}
                     </span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{subject.subject_name}</h3>
                   <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">{subject.subject_code}</p>
-                  <button className="w-full px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition-all">
+                  <button className="w-full px-4 py-2 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold transition-all">
                     Select
                   </button>
                 </motion.div>
@@ -252,7 +253,7 @@ export default function TeacherMarks() {
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Select Student</h2>
           {students.length === 0 ? (
             <div className="text-center py-12 bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
-              <div className="text-6xl text-slate-300 dark:text-slate-600 mb-4">👥</div>
+              <Icon name="users" size={64} className="text-slate-300 dark:text-slate-600 mx-auto mb-4" />
               <p className="text-slate-600 dark:text-slate-400 text-lg">No students found</p>
             </div>
           ) : (
@@ -263,7 +264,7 @@ export default function TeacherMarks() {
                     key={student.id}
                     whileHover={{ x: 5 }}
                     onClick={() => handleStudentSelect(student)}
-                    className="flex items-center gap-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl hover:bg-green-500/10 dark:hover:bg-green-500/20 cursor-pointer transition-all border border-slate-200 dark:border-slate-600"
+                    className="flex items-center gap-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl hover:bg-picton-blue/10 cursor-pointer transition-all border border-slate-200 dark:border-slate-600"
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
                       {student.first_name[0]}{student.last_name[0]}
@@ -276,7 +277,7 @@ export default function TeacherMarks() {
                         {student.student_id} • Semester {student.semester}
                       </p>
                     </div>
-                    <div className="text-slate-400">→</div>
+                    <Icon name="arrowRight" size={20} className="text-slate-400" />
                   </motion.div>
                 ))}
               </div>
@@ -290,7 +291,7 @@ export default function TeacherMarks() {
           
           <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
             {/* Student Info */}
-            <div className="flex items-center gap-4 mb-6 p-4 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-xl">
+            <div className="flex items-center gap-4 mb-6 p-4 bg-picton-blue/10 rounded-xl">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl">
                 {selectedStudent.first_name[0]}{selectedStudent.last_name[0]}
               </div>
@@ -305,7 +306,7 @@ export default function TeacherMarks() {
             </div>
 
             {/* Subject Info */}
-            <div className="mb-6 p-4 bg-green-500/10 dark:bg-green-500/20 rounded-xl">
+            <div className="mb-6 p-4 bg-baby-blue/10 rounded-xl">
               <h3 className="text-lg font-bold text-slate-800 dark:text-white">
                 {selectedSubject.subject_name}
               </h3>
@@ -328,7 +329,7 @@ export default function TeacherMarks() {
                   value={internalMarks}
                   onChange={(e) => setInternalMarks(e.target.value)}
                   placeholder="Enter internal marks"
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-slate-800 dark:text-white text-lg font-semibold focus:outline-none focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-slate-800 dark:text-white text-lg font-semibold focus:outline-none focus:border-picton-blue transition-all"
                 />
               </div>
 
@@ -344,20 +345,20 @@ export default function TeacherMarks() {
                   value={externalMarks}
                   onChange={(e) => setExternalMarks(e.target.value)}
                   placeholder="Enter external marks"
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-slate-800 dark:text-white text-lg font-semibold focus:outline-none focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-slate-800 dark:text-white text-lg font-semibold focus:outline-none focus:border-picton-blue transition-all"
                 />
               </div>
 
               {/* Total Preview */}
               {(internalMarks || externalMarks) && (
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white">
+                <div className="bg-gradient-to-r from-picton-blue to-baby-blue rounded-xl p-6 text-white">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-indigo-100 text-sm mb-1">Total Marks</p>
+                      <p className="text-white/80 text-sm mb-1">Total Marks</p>
                       <p className="text-4xl font-bold">{getTotalMarks()}/100</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-indigo-100 text-sm mb-1">Breakdown</p>
+                      <p className="text-white/80 text-sm mb-1">Breakdown</p>
                       <p className="text-lg font-semibold">
                         {internalMarks || 0} + {externalMarks || 0}
                       </p>
@@ -370,15 +371,18 @@ export default function TeacherMarks() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !internalMarks || !externalMarks}
-                className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg rounded-xl shadow-lg transition-all transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed"
+                className="w-full py-4 bg-gradient-to-r from-picton-blue to-baby-blue hover:from-picton-blue-600 hover:to-baby-blue-600 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg rounded-xl shadow-lg transition-all transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
-                    <div className="animate-spin">⏳</div>
+                    <Icon name="refresh" size={20} className="animate-spin" />
                     Submitting...
                   </span>
                 ) : (
-                  <span>✓ Submit Marks</span>
+                  <span className="flex items-center justify-center gap-2">
+                    <Icon name="check" size={20} />
+                    Submit Marks
+                  </span>
                 )}
               </button>
             </div>
@@ -396,7 +400,7 @@ export default function TeacherMarks() {
           >
             <div className="text-center mb-6">
               <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-                <div className="text-5xl">✅</div>
+                <Icon name="checkCircle" size={48} className="text-green-500" />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Marks Submitted!</h3>
               <p className="text-slate-600 dark:text-slate-400">
@@ -405,25 +409,25 @@ export default function TeacherMarks() {
             </div>
 
             {/* Grade Details */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white mb-4">
+            <div className="bg-gradient-to-r from-picton-blue to-baby-blue rounded-xl p-6 text-white mb-4">
               <div className="text-center mb-4">
-                <p className="text-indigo-100 text-sm mb-1">Grade Awarded</p>
+                <p className="text-white/80 text-sm mb-1">Grade Awarded</p>
                 <p className="text-6xl font-bold mb-2">{calculatedGrade.letter_grade}</p>
-                <p className="text-indigo-100">
+                <p className="text-white/80">
                   Grade Point: {calculatedGrade.grade_point?.toFixed(2)}
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div>
-                  <p className="text-indigo-100 text-xs mb-1">Internal</p>
+                  <p className="text-white/80 text-xs mb-1">Internal</p>
                   <p className="text-xl font-bold">{calculatedGrade.internal_marks}</p>
                 </div>
                 <div>
-                  <p className="text-indigo-100 text-xs mb-1">External</p>
+                  <p className="text-white/80 text-xs mb-1">External</p>
                   <p className="text-xl font-bold">{calculatedGrade.external_marks}</p>
                 </div>
                 <div>
-                  <p className="text-indigo-100 text-xs mb-1">Total</p>
+                  <p className="text-white/80 text-xs mb-1">Total</p>
                   <p className="text-xl font-bold">{calculatedGrade.total_marks}</p>
                 </div>
               </div>

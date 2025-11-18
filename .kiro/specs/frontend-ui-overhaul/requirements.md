@@ -8,7 +8,7 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 
 - **Frontend Application**: The React-based user interface of the Student Portal Management System
 - **Glassmorphic Design**: A UI design style featuring frosted glass effects with transparency, blur, and subtle borders
-- **Color Palette**: The new color scheme consisting of Gunmetal (#2a2d34), Celestial Blue (#009ddc), Giants Orange (#f26430), and Lavender Blush (#eee5e9)
+- **Color Palette**: The new blue-themed color scheme consisting of Alice Blue (#f2faff), Rich Black (#001926), Picton Blue (#00a9ff), Baby Blue (#89cff3), and Non-Photo Blue (#a0e9ff)
 - **Navigation Component**: The floating bottom navigation bar used for primary navigation
 - **Theme System**: The light/dark mode toggle functionality
 - **Icon System**: Custom SVG icons matching the color palette and minimalistic design
@@ -20,16 +20,17 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 
 ### Requirement 1: Color Palette Implementation
 
-**User Story:** As a user, I want a cohesive and modern color scheme throughout the application, so that the interface feels professional and visually appealing.
+**User Story:** As a user, I want a cohesive and modern blue-themed color scheme throughout the application, so that the interface feels professional and visually appealing.
 
 #### Acceptance Criteria
 
-1. WHEN the application loads in light mode, THE Frontend Application SHALL use Lavender Blush (#eee5e9) as the primary background color
-2. WHEN the application loads in dark mode, THE Frontend Application SHALL use Gunmetal (#2a2d34) as the primary background color
-3. THE Frontend Application SHALL use Celestial Blue (#009ddc) as the primary accent color for interactive elements, buttons, and active states
-4. THE Frontend Application SHALL use Giants Orange (#f26430) as the secondary accent color for warnings, alerts, and call-to-action elements
-5. THE Frontend Application SHALL replace all existing color references in Tailwind configuration, CSS files, and component styles with the new color palette
-6. THE Frontend Application SHALL maintain WCAG AA contrast ratios for text readability in both light and dark modes
+1. WHEN the application loads in light mode, THE Frontend Application SHALL use Alice Blue (#f2faff) as the primary background color with gradients to Non-Photo Blue
+2. WHEN the application loads in dark mode, THE Frontend Application SHALL use Rich Black (#001926) as the primary background color
+3. THE Frontend Application SHALL use Picton Blue (#00a9ff) as the primary accent color for interactive elements, buttons, and active states
+4. THE Frontend Application SHALL use Baby Blue (#89cff3) as the secondary accent color for hover states and secondary actions
+5. THE Frontend Application SHALL use Non-Photo Blue (#a0e9ff) as tertiary accent for subtle highlights
+6. THE Frontend Application SHALL replace all existing color references in Tailwind configuration, CSS files, and component styles with the new blue-themed color palette
+7. THE Frontend Application SHALL maintain WCAG AA contrast ratios for text readability in both light and dark modes
 
 ### Requirement 2: Glassmorphic Design Enhancement
 
@@ -92,7 +93,7 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 
 1. THE Frontend Application SHALL maintain the floating bottom navigation bar with glassmorphic styling
 2. THE Frontend Application SHALL update the Navigation Component background to use the new color palette with appropriate transparency
-3. THE Frontend Application SHALL ensure the active tab indicator uses Celestial Blue (#009ddc) with smooth spring animation
+3. THE Frontend Application SHALL ensure the active tab indicator uses Picton Blue (#00a9ff) with smooth spring animation
 4. THE Frontend Application SHALL update navigation icons to use the custom minimalistic icon system
 5. THE Frontend Application SHALL ensure navigation items have appropriate hover states with subtle color transitions
 6. THE Frontend Application SHALL maintain the Navigation Component's responsive behavior across all screen sizes
@@ -104,8 +105,8 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 #### Acceptance Criteria
 
 1. THE Frontend Application SHALL update the Theme Toggle component to use the new color palette
-2. WHEN in light mode, THE Frontend Application SHALL use Lavender Blush (#eee5e9) as the primary background
-3. WHEN in dark mode, THE Frontend Application SHALL use Gunmetal (#2a2d34) as the primary background
+2. WHEN in light mode, THE Frontend Application SHALL use Alice Blue (#f2faff) as the primary background
+3. WHEN in dark mode, THE Frontend Application SHALL use Rich Black (#001926) as the primary background
 4. THE Frontend Application SHALL ensure all text maintains appropriate contrast ratios in both themes
 5. THE Frontend Application SHALL persist theme preference in localStorage
 6. THE Frontend Application SHALL apply theme changes with smooth transitions (duration 300ms)
@@ -120,7 +121,7 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 2. THE Frontend Application SHALL replace all emoji icons on the Dashboard with custom minimalistic icons
 3. THE Frontend Application SHALL implement full-width responsive layout for the Dashboard
 4. THE Frontend Application SHALL update stat cards (GPA, CGPA, Attendance) with glassmorphic styling and new colors
-5. THE Frontend Application SHALL ensure quick action buttons use appropriate accent colors (Celestial Blue for primary, Giants Orange for secondary)
+5. THE Frontend Application SHALL ensure quick action buttons use appropriate accent colors (Picton Blue for primary, Baby Blue for secondary)
 6. THE Frontend Application SHALL apply minimalistic animations to Dashboard elements
 
 ### Requirement 9: Login Page Redesign
@@ -130,10 +131,10 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 #### Acceptance Criteria
 
 1. THE Frontend Application SHALL redesign the Login page using the new color palette and glassmorphic design
-2. THE Frontend Application SHALL update the role selector to use Celestial Blue (#009ddc) for the active state indicator
+2. THE Frontend Application SHALL update the role selector to use Picton Blue (#00a9ff) for the active state indicator
 3. THE Frontend Application SHALL apply glassmorphic styling to the login form container
 4. THE Frontend Application SHALL ensure form inputs have appropriate focus states using the new color palette
-5. THE Frontend Application SHALL update the login button to use Celestial Blue (#009ddc) with hover state
+5. THE Frontend Application SHALL update the login button to use Picton Blue (#00a9ff) with hover state
 6. THE Frontend Application SHALL maintain the Theme Toggle functionality on the Login page
 
 ### Requirement 10: Admin and Teacher Interface Consistency
@@ -156,8 +157,8 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 #### Acceptance Criteria
 
 1. THE Frontend Application SHALL update all components in the components directory (CustomAlert, CustomSelect, ThemeToggle, etc.) with the new color palette
-2. THE Frontend Application SHALL ensure CustomSelect component uses Celestial Blue (#009ddc) for focus and selected states
-3. THE Frontend Application SHALL update CustomAlert component to use Giants Orange (#f26430) for warning/error states
+2. THE Frontend Application SHALL ensure CustomSelect component uses Picton Blue (#00a9ff) for focus and selected states
+3. THE Frontend Application SHALL update CustomAlert component to use appropriate colors for warning/error states
 4. THE Frontend Application SHALL apply glassmorphic styling to modal and overlay components
 5. THE Frontend Application SHALL update all form components (inputs, selects, buttons) with the new design system
 6. THE Frontend Application SHALL ensure all components support both light and dark themes with the new color palette
@@ -168,7 +169,7 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 
 #### Acceptance Criteria
 
-1. THE Frontend Application SHALL update tailwind.config.js to include custom color definitions for Gunmetal, Celestial Blue, Giants Orange, and Lavender Blush
+1. THE Frontend Application SHALL update tailwind.config.js to include custom color definitions for Alice Blue, Rich Black, Picton Blue, Baby Blue, and Non-Photo Blue with full shade ranges (50-900)
 2. THE Frontend Application SHALL define custom utility classes for glassmorphic effects
 3. THE Frontend Application SHALL update the theme configuration to support the new color palette in both light and dark modes
 4. THE Frontend Application SHALL ensure all custom colors are accessible via Tailwind utility classes (e.g., bg-celestial-blue, text-gunmetal)
@@ -194,7 +195,7 @@ This document outlines the requirements for a comprehensive frontend UI overhaul
 
 1. THE Frontend Application SHALL maintain WCAG AA contrast ratios for all text and interactive elements
 2. THE Frontend Application SHALL ensure all custom icons have appropriate aria-labels
-3. THE Frontend Application SHALL maintain keyboard navigation functionality with visible focus indicators using Celestial Blue (#009ddc)
+3. THE Frontend Application SHALL maintain keyboard navigation functionality with visible focus indicators using Picton Blue (#00a9ff)
 4. THE Frontend Application SHALL ensure glassmorphic elements do not reduce text readability below accessibility standards
 5. THE Frontend Application SHALL test color contrast in both light and dark modes using accessibility tools
 

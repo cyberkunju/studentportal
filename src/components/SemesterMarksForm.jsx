@@ -142,7 +142,7 @@ export default function SemesterMarksForm({ student, onSubmit, onBack }) {
                     value={subject.courseCode}
                     onChange={(e) => updateSubject(index, 'courseCode', e.target.value)}
                     placeholder="Code"
-                    className="w-full px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-slate-800 dark:text-white text-sm"
+                    className="w-full px-2 py-1 rounded border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue text-sm focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
                   />
                 </td>
                 <td className="p-2">
@@ -151,7 +151,7 @@ export default function SemesterMarksForm({ student, onSubmit, onBack }) {
                     value={subject.courseName}
                     onChange={(e) => updateSubject(index, 'courseName', e.target.value)}
                     placeholder="Course Name"
-                    className="w-full px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-slate-800 dark:text-white text-sm"
+                    className="w-full px-2 py-1 rounded border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue text-sm focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
                   />
                 </td>
                 <td className="p-2">
@@ -159,7 +159,7 @@ export default function SemesterMarksForm({ student, onSubmit, onBack }) {
                     type="number"
                     value={subject.credit}
                     onChange={(e) => updateSubject(index, 'credit', e.target.value)}
-                    className="w-16 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-slate-800 dark:text-white text-sm text-center"
+                    className="w-16 px-2 py-1 rounded border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue text-sm text-center focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
                   />
                 </td>
                 <td className="p-2">
@@ -169,7 +169,7 @@ export default function SemesterMarksForm({ student, onSubmit, onBack }) {
                     onChange={(e) => updateSubject(index, 'esaMarks', e.target.value)}
                     max={subject.esaMax}
                     placeholder="0"
-                    className="w-16 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-slate-800 dark:text-white text-sm text-center"
+                    className="w-16 px-2 py-1 rounded border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue text-sm text-center focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
                   />
                 </td>
                 <td className="p-2 text-center text-slate-600 dark:text-slate-400">{subject.esaMax}</td>
@@ -180,7 +180,7 @@ export default function SemesterMarksForm({ student, onSubmit, onBack }) {
                     onChange={(e) => updateSubject(index, 'isaMarks', e.target.value)}
                     max={subject.isaMax}
                     placeholder="0"
-                    className="w-16 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-slate-800 dark:text-white text-sm text-center"
+                    className="w-16 px-2 py-1 rounded border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue text-sm text-center focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
                   />
                 </td>
                 <td className="p-2 text-center text-slate-600 dark:text-slate-400">{subject.isaMax}</td>

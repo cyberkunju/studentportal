@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import Navigation from '../components/Navigation'
 import ThemeToggle from '../components/ThemeToggle'
+import Icon from '../components/Icon'
 import api from '../services/api'
 
 export default function Notice() {
@@ -34,28 +35,28 @@ export default function Notice() {
   }, [])
 
   const categories = {
-    general: { label: 'General', icon: 'fa-info-circle', color: 'purple' },
-    academic: { label: 'Academic', icon: 'fa-graduation-cap', color: 'blue' },
-    event: { label: 'Event', icon: 'fa-calendar-alt', color: 'green' },
-    exam: { label: 'Exam', icon: 'fa-file-alt', color: 'orange' },
-    holiday: { label: 'Holiday', icon: 'fa-umbrella-beach', color: 'teal' },
-    sports: { label: 'Sports', icon: 'fa-futbol', color: 'red' }
+    general: { label: 'General', icon: 'info', color: 'picton-blue' },
+    academic: { label: 'Academic', icon: 'book', color: 'picton-blue' },
+    event: { label: 'Event', icon: 'calendar', color: 'baby-blue' },
+    exam: { label: 'Exam', icon: 'document', color: 'baby-blue' },
+    holiday: { label: 'Holiday', icon: 'calendar', color: 'non-photo-blue' },
+    sports: { label: 'Sports', icon: 'star', color: 'baby-blue' }
   }
 
   const getCategoryIcon = (category) => {
-    return categories[category]?.icon || 'fa-info-circle'
+    return categories[category]?.icon || 'info'
   }
 
   const getCategoryColor = (category) => {
-    const color = categories[category]?.color || 'purple'
-    return `bg-${color}-500/20 text-${color}-500`
+    const color = categories[category]?.color || 'picton-blue'
+    return `bg-${color}/20 text-${color}`
   }
 
   const getPriorityColor = (priority) => {
     const colors = {
-      low: 'bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/30',
+      low: 'bg-picton-blue/20 text-picton-blue dark:text-picton-blue-400 border-picton-blue/30',
       normal: 'bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30',
-      high: 'bg-orange-500/20 text-orange-600 dark:text-orange-400 border-orange-500/30',
+      high: 'bg-baby-blue/20 text-baby-blue-700 dark:text-baby-blue-400 border-baby-blue/30',
       urgent: 'bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/30'
     }
     return colors[priority] || colors.normal
@@ -80,32 +81,32 @@ export default function Notice() {
       >
       {/* Top Header */}
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Notice Board</h1>
+        <h1 className="text-3xl font-bold text-rich-black dark:text-alice-blue">Notice Board</h1>
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name || 'Student'}</span>
+          <span className="text-rich-black/80 dark:text-alice-blue/80 font-medium">{user?.full_name || 'Student'}</span>
           {user?.profile_image ? (
             <img 
               src={user.profile_image} 
               alt={user.full_name} 
-              className="w-10 h-10 rounded-full object-cover border-2 border-indigo-500"
+              className="w-10 h-10 rounded-full object-cover border-2 border-picton-blue"
             />
           ) : (
-            <div className="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white font-bold">
               {user?.full_name?.charAt(0) || 'S'}
             </div>
           )}
         </div>
       </header>
 
-      <p className="text-slate-600 dark:text-slate-400 mb-8">Stay updated with announcements</p>
+      <p className="text-rich-black/60 dark:text-alice-blue/60 mb-8">Stay updated with announcements</p>
 
       {/* Notices */}
       <div className="space-y-6">
         {notices.length === 0 ? (
-          <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg text-center">
-            <i className="fas fa-bullhorn text-6xl text-slate-400 mb-4"></i>
-            <p className="text-slate-600 dark:text-slate-400 text-lg">No notices available at the moment.</p>
+          <div className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-xl rounded-2xl p-12 border border-white/20 dark:border-gray-700/20 shadow-lg text-center">
+            <Icon name="bell" size={64} className="mx-auto mb-4 text-rich-black/20 dark:text-alice-blue/20" />
+            <p className="text-rich-black/60 dark:text-alice-blue/60 text-lg">No notices available at the moment.</p>
           </div>
         ) : (
           notices.map((notice, index) => (
@@ -113,8 +114,8 @@ export default function Notice() {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg overflow-hidden hover:shadow-xl transition-all"
+              transition={{ delay: index * 0.1, duration: 0.2 }}
+              className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-lg overflow-hidden hover:opacity-90 transition-opacity duration-200"
             >
               {/* Notice Content */}
               <div className="p-6 w-full">
@@ -123,11 +124,11 @@ export default function Notice() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${getCategoryColor(notice.category)}`}>
-                        <i className={`fas ${getCategoryIcon(notice.category)} text-lg`}></i>
+                        <Icon name={getCategoryIcon(notice.category)} size={20} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-slate-800 dark:text-white">{notice.title}</h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                        <h3 className="text-xl font-bold text-rich-black dark:text-alice-blue">{notice.title}</h3>
+                        <p className="text-sm text-rich-black/60 dark:text-alice-blue/60">
                           {notice.created_by && `Posted by ${notice.created_by} • `}
                           {new Date(notice.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                         </p>
@@ -149,20 +150,20 @@ export default function Notice() {
                 </div>
 
                 {/* Content */}
-                <p className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">{notice.content}</p>
+                <p className="text-rich-black/80 dark:text-alice-blue/80 whitespace-pre-wrap leading-relaxed">{notice.content}</p>
                 
                 {/* Pay Now Button for Fee Notices */}
                 {notice.feeDetails && (
-                  <div className="mt-6 pt-6 border-t border-slate-300 dark:border-slate-600">
+                  <div className="mt-6 pt-6 border-t border-rich-black/10 dark:border-alice-blue/10">
                     <button
                       onClick={() => navigate('/payments')}
-                      className="w-full py-4 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-lg rounded-xl shadow-lg transition-all flex items-center justify-center gap-3"
+                      className="w-full py-4 bg-gradient-to-r from-picton-blue to-baby-blue hover:from-picton-blue-600 hover:to-baby-blue-600 text-white font-bold text-lg rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
                     >
-                      <i className="fas fa-credit-card text-xl"></i>
+                      <Icon name="creditCard" size={20} className="text-white" />
                       Pay Now - ₹{notice.feeDetails.amount}
                     </button>
-                    <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-3">
-                      <i className="fas fa-info-circle mr-1"></i>
+                    <p className="text-center text-sm text-rich-black/60 dark:text-alice-blue/60 mt-3">
+                      <Icon name="info" size={16} className="inline mr-1" />
                       Click to proceed to payment page
                     </p>
                   </div>

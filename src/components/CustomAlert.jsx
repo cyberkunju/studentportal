@@ -5,11 +5,11 @@ export default function CustomAlert({ isOpen, onClose, title, message, type = 'w
 
   const typeStyles = {
     warning: {
-      gradient: 'from-orange-500 to-amber-600',
+      gradient: 'from-baby-blue to-baby-blue-600',
       icon: icon || 'fa-exclamation-triangle',
-      iconBg: 'bg-orange-500/20',
-      iconColor: 'text-orange-500',
-      buttonBg: 'bg-orange-500 hover:bg-orange-600'
+      iconBg: 'bg-baby-blue/20',
+      iconColor: 'text-baby-blue',
+      buttonBg: 'bg-baby-blue hover:bg-baby-blue-600'
     },
     error: {
       gradient: 'from-red-500 to-rose-600',
@@ -26,11 +26,11 @@ export default function CustomAlert({ isOpen, onClose, title, message, type = 'w
       buttonBg: 'bg-green-500 hover:bg-green-600'
     },
     info: {
-      gradient: 'from-blue-500 to-indigo-600',
+      gradient: 'from-picton-blue to-picton-blue-600',
       icon: icon || 'fa-info-circle',
-      iconBg: 'bg-blue-500/20',
-      iconColor: 'text-blue-500',
-      buttonBg: 'bg-blue-500 hover:bg-blue-600'
+      iconBg: 'bg-picton-blue/20',
+      iconColor: 'text-picton-blue',
+      buttonBg: 'bg-picton-blue hover:bg-picton-blue-600'
     }
   }
 
@@ -48,7 +48,7 @@ export default function CustomAlert({ isOpen, onClose, title, message, type = 'w
           exit={{ opacity: 0, scale: 0.9, y: -20 }}
           transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+          className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/20 max-w-md w-full overflow-hidden"
         >
           {/* Header with gradient */}
           <div className={`bg-gradient-to-r ${style.gradient} p-6 text-white`}>

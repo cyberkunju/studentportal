@@ -5,6 +5,7 @@ import ThemeToggle from '../../components/ThemeToggle'
 import ImageCropper from '../../components/ImageCropper'
 import AnimatedDatePicker from '../../components/AnimatedDatePicker'
 import CustomSelect from '../../components/CustomSelect'
+import Icon from '../../components/Icon'
 import api from '../../services/api'
 
 export default function AdminStudents() {
@@ -68,10 +69,10 @@ export default function AdminStudents() {
 
   const fetchStudents = async () => {
     setLoading(true)
-    const response = await api.getStudents()
+    const response = await api.listStudents()
     if (response.success) {
-      setStudents(response.students)
-      filterStudents(response.students)
+      setStudents(response.data.students)
+      filterStudents(response.data.students)
     }
     setLoading(false)
   }
@@ -270,21 +271,21 @@ export default function AdminStudents() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/admin/dashboard')}
-            className="w-10 h-10 rounded-lg bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all"
+            className="w-10 h-10 rounded-lg bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-picton-blue/10 transition-all duration-200"
           >
-            <i className="fas fa-arrow-left text-slate-800 dark:text-white"></i>
+            <Icon name="arrowLeft" size={20} className="text-rich-black dark:text-alice-blue" />
           </button>
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Manage Students</h1>
+          <h1 className="text-3xl font-bold text-rich-black dark:text-alice-blue">Manage Students</h1>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name}</span>
-          <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
-            <i className="fas fa-user-shield text-xl"></i>
+          <span className="text-rich-black/80 dark:text-alice-blue/80 font-medium">{user?.full_name}</span>
+          <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white">
+            <Icon name="user" size={20} />
           </div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all"
+            className="px-4 py-2 bg-baby-blue hover:bg-baby-blue-600 text-white rounded-lg font-semibold transition-all duration-200"
           >
             Logout
           </button>
@@ -295,9 +296,9 @@ export default function AdminStudents() {
       <div className="mb-6">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold shadow-lg flex items-center gap-2 transition-all"
+          className="px-6 py-3 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold shadow-lg flex items-center gap-2 transition-all duration-200 active:scale-98"
         >
-          <i className={`fas ${showAddForm ? 'fa-times' : 'fa-plus'}`}></i>
+          <Icon name={showAddForm ? 'x' : 'plus'} size={20} />
           {showAddForm ? 'Cancel' : 'Add New Student'}
         </button>
       </div>
@@ -315,31 +316,31 @@ export default function AdminStudents() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Profile Photo Upload */}
-            <div className="flex items-center gap-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="flex items-center gap-6 p-4 bg-picton-blue/10 dark:bg-picton-blue/20 rounded-lg">
               <div>
                 {imagePreview ? (
                   <img 
                     src={imagePreview} 
                     alt="Preview" 
-                    className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
+                    className="w-24 h-24 rounded-full object-cover border-4 border-picton-blue"
                   />
                 ) : (
                   <div className="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                    <i className="fas fa-user text-4xl text-gray-500 dark:text-gray-400"></i>
+                    <Icon name="user" size={32} className="text-gray-500 dark:text-gray-400" />
                   </div>
                 )}
               </div>
               <div className="flex-1">
-                <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+                <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                   Profile Photo (Optional)
                 </label>
                 <div className="flex gap-3">
                   <button
                     type="button"
                     onClick={() => setShowCropper(true)}
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm"
+                    className="px-4 py-2 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold text-sm transition-all duration-200 flex items-center gap-2"
                   >
-                    <i className="fas fa-camera mr-2"></i>
+                    <Icon name="upload" size={16} />
                     {imagePreview ? 'Change Photo' : 'Upload Photo'}
                   </button>
                   {imagePreview && (
@@ -349,13 +350,13 @@ export default function AdminStudents() {
                         setImagePreview(null)
                         setSelectedImage(null)
                       }}
-                      className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold text-sm"
+                      className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold text-sm transition-all duration-200"
                     >
-                      <i className="fas fa-trash"></i>
+                      <Icon name="trash" size={16} />
                     </button>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                <p className="text-xs text-rich-black/60 dark:text-alice-blue/60 mt-2">
                   Image will be auto-cropped to circular format
                 </p>
               </div>
@@ -364,7 +365,7 @@ export default function AdminStudents() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Student ID */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Student ID <span className="text-red-500">*</span>
               </label>
               <input
@@ -374,13 +375,13 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="e.g., S2025109"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
             {/* Full Name */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -390,13 +391,13 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="Enter full name"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
             {/* Username */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Username <span className="text-red-500">*</span>
               </label>
               <input
@@ -406,13 +407,13 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="e.g., john.doe"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -422,13 +423,13 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="student@university.edu"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Password <span className="text-red-500">*</span>
               </label>
               <input
@@ -438,7 +439,7 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="Enter password"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
@@ -466,7 +467,7 @@ export default function AdminStudents() {
 
             {/* Year */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Year <span className="text-red-500">*</span>
               </label>
               <input
@@ -477,13 +478,13 @@ export default function AdminStudents() {
                 min="2020"
                 max="2030"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
             {/* Phone */}
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Phone Number
               </label>
               <input
@@ -492,7 +493,7 @@ export default function AdminStudents() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="+1 234 567 8900"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               />
             </div>
 
@@ -506,7 +507,7 @@ export default function AdminStudents() {
 
             {/* Address */}
             <div className="md:col-span-2">
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">
+              <label className="block text-rich-black/80 dark:text-alice-blue/80 font-semibold mb-2">
                 Address
               </label>
               <textarea
@@ -515,7 +516,7 @@ export default function AdminStudents() {
                 onChange={handleInputChange}
                 placeholder="Enter full address"
                 rows="3"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all duration-200"
               ></textarea>
             </div>
 
@@ -524,21 +525,21 @@ export default function AdminStudents() {
               <button
                 type="submit"
                 disabled={uploading || loading}
-                className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow-lg transition-all duration-200 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {uploading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin mr-2"></i>
+                    <Icon name="upload" size={20} className="animate-pulse" />
                     Uploading Image...
                   </>
                 ) : loading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin mr-2"></i>
+                    <Icon name="check" size={20} className="animate-pulse" />
                     {isEditMode ? 'Updating Student...' : 'Adding Student...'}
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-save mr-2"></i>
+                    <Icon name="check" size={20} />
                     {isEditMode ? 'Update Student' : 'Add Student'}
                   </>
                 )}
@@ -547,9 +548,9 @@ export default function AdminStudents() {
                 <button
                   type="button"
                   onClick={handleCancelEdit}
-                  className="flex-1 py-3 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all"
+                  className="flex-1 py-3 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg shadow-lg transition-all duration-200 active:scale-98 flex items-center justify-center gap-2"
                 >
-                  <i className="fas fa-times mr-2"></i>
+                  <Icon name="x" size={20} />
                   Cancel
                 </button>
               )}
@@ -562,24 +563,24 @@ export default function AdminStudents() {
       {/* Students List */}
       <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
+          <h2 className="text-2xl font-bold text-rich-black dark:text-alice-blue">
             {urlYear || urlDepartment ? 'Filtered Students' : 'All Students'}
           </h2>
           {(urlYear || urlDepartment) && (
             <div className="flex items-center gap-2">
               {urlYear && (
-                <span className="px-3 py-1 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg font-semibold text-sm">
+                <span className="px-3 py-1 bg-picton-blue/20 text-picton-blue dark:text-picton-blue-400 rounded-lg font-semibold text-sm">
                   {urlYear}
                 </span>
               )}
               {urlDepartment && (
-                <span className="px-3 py-1 bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-lg font-semibold text-sm">
+                <span className="px-3 py-1 bg-baby-blue/20 text-baby-blue-700 dark:text-baby-blue-400 rounded-lg font-semibold text-sm">
                   {urlDepartment}
                 </span>
               )}
               <button
                 onClick={() => navigate('/admin/students')}
-                className="px-3 py-1 bg-slate-500/20 text-slate-600 dark:text-slate-400 rounded-lg font-semibold text-sm hover:bg-slate-500/30"
+                className="px-3 py-1 bg-gray-500/20 text-gray-600 dark:text-gray-400 rounded-lg font-semibold text-sm hover:bg-gray-500/30 transition-all duration-200"
               >
                 Clear Filters
               </button>
@@ -589,12 +590,12 @@ export default function AdminStudents() {
         
         {loading ? (
           <div className="text-center py-12">
-            <div className="text-2xl text-slate-800 dark:text-white">Loading...</div>
+            <div className="text-2xl text-rich-black dark:text-alice-blue">Loading...</div>
           </div>
         ) : filteredStudents.length === 0 ? (
           <div className="text-center py-12">
-            <i className="fas fa-users text-6xl text-slate-400 mb-4"></i>
-            <p className="text-slate-600 dark:text-slate-400">
+            <Icon name="users" size={64} className="text-gray-400 mb-4 mx-auto" />
+            <p className="text-rich-black/60 dark:text-alice-blue/60">
               {urlYear || urlDepartment ? 'No students found matching the filters.' : 'No students found. Add your first student!'}
             </p>
           </div>
@@ -602,35 +603,35 @@ export default function AdminStudents() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b-2 border-slate-300 dark:border-slate-600">
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Student ID</th>
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Name</th>
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Department</th>
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Year</th>
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Semester</th>
-                  <th className="px-4 py-3 text-left text-slate-700 dark:text-slate-300 font-semibold">Actions</th>
+                <tr className="border-b-2 border-baby-blue/30 dark:border-baby-blue/20">
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Student ID</th>
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Name</th>
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Department</th>
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Year</th>
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Semester</th>
+                  <th className="px-4 py-3 text-left text-rich-black/80 dark:text-alice-blue/80 font-semibold">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredStudents.map((student, index) => (
-                  <tr key={index} className="border-b border-slate-200 dark:border-slate-700 hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-all">
-                    <td className="px-4 py-3 text-slate-800 dark:text-white">{student.student_id}</td>
-                    <td className="px-4 py-3 text-slate-800 dark:text-white">{student.full_name}</td>
-                    <td className="px-4 py-3 text-slate-800 dark:text-white">{student.department}</td>
-                    <td className="px-4 py-3 text-slate-800 dark:text-white">Year {student.year}</td>
-                    <td className="px-4 py-3 text-slate-800 dark:text-white">Sem {student.semester}</td>
+                  <tr key={index} className="border-b border-baby-blue/20 dark:border-baby-blue/10 hover:bg-picton-blue/10 transition-all duration-200">
+                    <td className="px-4 py-3 text-rich-black dark:text-alice-blue">{student.student_id}</td>
+                    <td className="px-4 py-3 text-rich-black dark:text-alice-blue">{student.full_name}</td>
+                    <td className="px-4 py-3 text-rich-black dark:text-alice-blue">{student.department}</td>
+                    <td className="px-4 py-3 text-rich-black dark:text-alice-blue">Year {student.year}</td>
+                    <td className="px-4 py-3 text-rich-black dark:text-alice-blue">Sem {student.semester}</td>
                     <td className="px-4 py-3">
                       <button 
                         onClick={() => handleEdit(student)}
-                        className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 mr-2 transition-all"
+                        className="px-3 py-1.5 bg-baby-blue hover:bg-baby-blue-600 text-white rounded-lg font-semibold shadow-md transition-all duration-200 active:scale-98 mr-2 inline-flex items-center gap-1"
                       >
-                        <i className="fas fa-edit"></i>
+                        <Icon name="edit" size={16} />
                       </button>
                       <button 
                         onClick={() => handleDelete(student.student_id)}
-                        className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                        className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow-md transition-all duration-200 active:scale-98 inline-flex items-center gap-1"
                       >
-                        <i className="fas fa-trash"></i>
+                        <Icon name="trash" size={16} />
                       </button>
                     </td>
                   </tr>
@@ -653,33 +654,34 @@ export default function AdminStudents() {
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-red-200 dark:border-red-900"
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-8 max-w-md w-full shadow-2xl border border-red-200/50 dark:border-red-900/50"
           >
             <div className="text-center">
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
-                <i className="fas fa-exclamation-triangle text-3xl text-red-600 dark:text-red-400"></i>
+                <Icon name="exclamation" size={32} className="text-red-600 dark:text-red-400" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
+              <h3 className="text-2xl font-bold text-rich-black dark:text-alice-blue mb-3">
                 Delete Student
               </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-6">
+              <p className="text-rich-black/70 dark:text-alice-blue/70 mb-6">
                 Are you sure you want to delete this student? This action cannot be undone and will permanently remove all student data.
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={cancelDelete}
-                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-slate-800 dark:text-white rounded-xl font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-rich-black dark:text-alice-blue rounded-xl font-semibold shadow-md transition-all duration-200 active:scale-98"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                  className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold shadow-md transition-all duration-200 active:scale-98 flex items-center justify-center gap-2"
                 >
-                  <i className="fas fa-trash mr-2"></i>
+                  <Icon name="trash" size={20} />
                   Delete
                 </button>
               </div>
@@ -694,6 +696,7 @@ export default function AdminStudents() {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 0.2 }}
           className={`fixed top-6 right-6 z-50 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-xl border-2 flex items-center gap-3 max-w-md ${
             toast.type === 'success' 
               ? 'bg-green-500/90 border-green-400 text-white' 
@@ -705,14 +708,14 @@ export default function AdminStudents() {
               ? 'bg-white/20' 
               : 'bg-white/20'
           }`}>
-            <i className={`fas ${toast.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} text-xl`}></i>
+            <Icon name={toast.type === 'success' ? 'check' : 'exclamation'} size={20} />
           </div>
           <p className="font-semibold flex-1">{toast.message}</p>
           <button
             onClick={() => setToast({ show: false, message: '', type: '' })}
-            className="flex-shrink-0 text-white/80 hover:text-white transition-colors"
+            className="flex-shrink-0 text-white/80 hover:text-white transition-colors duration-200"
           >
-            <i className="fas fa-times text-lg"></i>
+            <Icon name="x" size={20} />
           </button>
         </motion.div>
       )}

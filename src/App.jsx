@@ -20,6 +20,8 @@ import TeacherAttendance from './pages/TeacherAttendance'
 import TeacherStudentList from './pages/TeacherStudentList'
 import TeacherNotice from './pages/TeacherNotice'
 import TeacherMarks from './pages/TeacherMarks'
+import TeacherAssignments from './pages/TeacherAssignments'
+import VirtualID from './pages/VirtualID'
 import api from './services/api'
 
 // Protected Route wrapper
@@ -53,6 +55,7 @@ function App() {
           <Route path="/subjects" element={<ProtectedRoute allowedRoles={['student']}><Subjects /></ProtectedRoute>} />
           <Route path="/result" element={<ProtectedRoute allowedRoles={['student']}><Result /></ProtectedRoute>} />
           <Route path="/analysis" element={<ProtectedRoute allowedRoles={['student']}><Analysis /></ProtectedRoute>} />
+          <Route path="/virtual-id" element={<ProtectedRoute allowedRoles={['student']}><VirtualID /></ProtectedRoute>} />
           
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
@@ -70,6 +73,7 @@ function App() {
           <Route path="/teacher/students" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherStudentList /></ProtectedRoute>} />
           <Route path="/teacher/notices" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherNotice /></ProtectedRoute>} />
           <Route path="/teacher/marks" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherMarks /></ProtectedRoute>} />
+          <Route path="/teacher/assignments" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherAssignments /></ProtectedRoute>} />
         </Routes>
       </AnimatePresence>
     </Router>

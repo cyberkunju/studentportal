@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import ThemeToggle from '../../components/ThemeToggle'
 import CustomSelect from '../../components/CustomSelect'
+import Icon from '../../components/Icon'
 import api from '../../services/api'
 
 export default function AdminTeachers() {
@@ -188,17 +189,17 @@ export default function AdminTeachers() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/admin/dashboard')}
-            className="w-10 h-10 rounded-lg bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all"
+            className="w-10 h-10 rounded-lg bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-picton-blue/10 transition-all"
           >
-            <i className="fas fa-arrow-left text-slate-800 dark:text-white"></i>
+            <Icon name="arrowLeft" size={20} className="text-slate-800 dark:text-white" />
           </button>
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Manage Teachers</h1>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name}</span>
-          <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
-            <i className="fas fa-user-shield text-xl"></i>
+          <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white">
+            <Icon name="userShield" size={20} className="text-white" />
           </div>
           <button
             onClick={handleLogout}
@@ -213,9 +214,9 @@ export default function AdminTeachers() {
       <div className="mb-6">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold shadow-lg flex items-center gap-2 transition-all"
+          className="px-6 py-3 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold shadow-lg flex items-center gap-2 transition-all active:scale-98"
         >
-          <i className={`fas ${showAddForm ? 'fa-times' : 'fa-plus'}`}></i>
+          <Icon name={showAddForm ? 'x' : 'plus'} size={20} className="text-white" />
           {showAddForm ? 'Cancel' : 'Add New Teacher'}
         </button>
       </div>
@@ -244,7 +245,7 @@ export default function AdminTeachers() {
                 onChange={handleInputChange}
                 placeholder="e.g., T2025001"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -260,7 +261,7 @@ export default function AdminTeachers() {
                 onChange={handleInputChange}
                 placeholder="Dr. John Smith"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -276,7 +277,7 @@ export default function AdminTeachers() {
                 onChange={handleInputChange}
                 placeholder="e.g., john.smith"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -292,7 +293,7 @@ export default function AdminTeachers() {
                 onChange={handleInputChange}
                 placeholder="teacher@university.edu"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -308,7 +309,7 @@ export default function AdminTeachers() {
                 onChange={handleInputChange}
                 placeholder="Enter password"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -345,7 +346,7 @@ export default function AdminTeachers() {
                 value={formData.specialization}
                 onChange={handleInputChange}
                 placeholder="e.g., Machine Learning, Data Structures"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -360,7 +361,7 @@ export default function AdminTeachers() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="+1 234 567 8900"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all"
               />
             </div>
 
@@ -396,7 +397,7 @@ export default function AdminTeachers() {
           </h2>
           {urlDepartment && (
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-green-500/20 text-green-600 dark:text-green-400 rounded-lg font-semibold text-sm">
+              <span className="px-3 py-1 bg-picton-blue/20 text-picton-blue dark:text-picton-blue-400 rounded-lg font-semibold text-sm">
                 {urlDepartment}
               </span>
               <button
@@ -415,7 +416,7 @@ export default function AdminTeachers() {
           </div>
         ) : filteredTeachers.length === 0 ? (
           <div className="text-center py-12">
-            <i className="fas fa-chalkboard-teacher text-6xl text-slate-400 mb-4"></i>
+            <Icon name="users" size={64} className="text-slate-400 mb-4 mx-auto" />
             <p className="text-slate-600 dark:text-slate-400">
               {urlDepartment ? 'No teachers found in this department.' : 'No teachers found. Add your first teacher!'}
             </p>
@@ -434,7 +435,7 @@ export default function AdminTeachers() {
               </thead>
               <tbody>
                 {filteredTeachers.map((teacher, index) => (
-                  <tr key={index} className="border-b border-slate-200 dark:border-slate-700 hover:bg-green-500/10 dark:hover:bg-green-500/20 transition-all">
+                  <tr key={index} className="border-b border-slate-200 dark:border-slate-700 hover:bg-picton-blue/10 transition-all">
                     <td className="px-4 py-3 text-slate-800 dark:text-white">{teacher.teacher_id}</td>
                     <td className="px-4 py-3 text-slate-800 dark:text-white">{teacher.full_name}</td>
                     <td className="px-4 py-3 text-slate-800 dark:text-white">{teacher.department}</td>
@@ -442,15 +443,15 @@ export default function AdminTeachers() {
                     <td className="px-4 py-3">
                       <button 
                         onClick={() => handleEdit(teacher)}
-                        className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 mr-2 transition-all"
+                        className="px-3 py-1.5 bg-baby-blue hover:bg-baby-blue-600 text-white rounded-lg font-semibold shadow-md mr-2 transition-all active:scale-98"
                       >
-                        <i className="fas fa-edit"></i>
+                        <Icon name="edit" size={16} className="text-white" />
                       </button>
                       <button 
                         onClick={() => handleDelete(teacher.teacher_id)}
-                        className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                        className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold shadow-md transition-all active:scale-98"
                       >
-                        <i className="fas fa-trash"></i>
+                        <Icon name="trash" size={16} className="text-white" />
                       </button>
                     </td>
                   </tr>
@@ -472,7 +473,7 @@ export default function AdminTeachers() {
           >
             <div className="text-center">
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
-                <i className="fas fa-exclamation-triangle text-3xl text-red-600 dark:text-red-400"></i>
+                <Icon name="exclamationCircle" size={32} className="text-red-600 dark:text-red-400" />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
                 Delete Teacher
@@ -489,9 +490,9 @@ export default function AdminTeachers() {
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
+                  className="flex-1 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold shadow-md transition-all active:scale-98"
                 >
-                  <i className="fas fa-trash mr-2"></i>
+                  <Icon name="trash" size={20} className="inline mr-2" />
                   Delete
                 </button>
               </div>

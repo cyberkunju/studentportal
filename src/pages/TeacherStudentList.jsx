@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import ThemeToggle from '../components/ThemeToggle'
+import Icon from '../components/Icon'
 import api from '../services/api'
 
 export default function TeacherStudentList() {
@@ -193,36 +194,36 @@ export default function TeacherStudentList() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/teacher/dashboard')}
-            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all"
+            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-picton-blue/10 transition-all"
           >
-            <i className="fas fa-arrow-left text-slate-800 dark:text-white"></i>
+            <Icon name="arrowLeft" size={20} className="text-slate-800 dark:text-white" />
           </button>
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Student List</h1>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name}</span>
-          <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white">
-            <i className="fas fa-users text-lg"></i>
+          <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white">
+            <Icon name="users" size={20} />
           </div>
         </div>
       </header>
 
       {/* Stats Banner */}
-      <div className="bg-gradient-to-r from-red-500 to-rose-600 rounded-2xl p-6 mb-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-r from-picton-blue to-baby-blue rounded-2xl p-6 mb-8 text-white shadow-2xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-              <i className="fas fa-users text-3xl"></i>
+              <Icon name="users" size={32} />
             </div>
             <div>
               <h2 className="text-2xl font-bold">My Students - {teacherDepartment}</h2>
-              <p className="text-red-100">Students in your department</p>
+              <p className="text-white/80">Students in your department</p>
             </div>
           </div>
           <div className="text-right">
             <p className="text-5xl font-bold">{filteredStudents.length}</p>
-            <p className="text-red-100">Students</p>
+            <p className="text-white/80">Students</p>
           </div>
         </div>
       </div>
@@ -232,13 +233,13 @@ export default function TeacherStudentList() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative md:col-span-2 lg:col-span-1">
-            <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+            <Icon name="search" size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search students..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full pl-12 pr-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-picton-blue"
             />
           </div>
 
@@ -246,7 +247,7 @@ export default function TeacherStudentList() {
           <select
             value={filterDepartment}
             onChange={(e) => setFilterDepartment(e.target.value)}
-            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-picton-blue"
           >
             <option value="all">All Departments</option>
             <option value="BCA">BCA</option>
@@ -258,7 +259,7 @@ export default function TeacherStudentList() {
           <select
             value={filterSemester}
             onChange={(e) => setFilterSemester(e.target.value)}
-            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-picton-blue"
           >
             <option value="all">All Semesters</option>
             <option value="1">Semester 1</option>
@@ -273,7 +274,7 @@ export default function TeacherStudentList() {
           <select
             value={filterBatch}
             onChange={(e) => setFilterBatch(e.target.value)}
-            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-picton-blue"
           >
             <option value="all">All Batches</option>
             <option value="2024">2024 Batch</option>
@@ -291,7 +292,7 @@ export default function TeacherStudentList() {
             key={student.id}
             whileHover={{ scale: 1.02, y: -5 }}
             onClick={() => setSelectedStudent(student)}
-            className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all"
+            className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-picton-blue/10 transition-all"
           >
             {/* Profile Section */}
             <div className="flex items-center gap-4 mb-4">
@@ -307,15 +308,15 @@ export default function TeacherStudentList() {
             {/* Quick Info */}
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                <i className="fas fa-envelope w-4"></i>
+                <Icon name="mail" size={16} />
                 <span className="truncate">{student.email}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                <i className="fas fa-building w-4"></i>
+                <Icon name="folder" size={16} />
                 <span>{student.department}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                <i className="fas fa-layer-group w-4"></i>
+                <Icon name="document" size={16} />
                 <span>Semester {student.semester}</span>
               </div>
             </div>
@@ -335,7 +336,7 @@ export default function TeacherStudentList() {
             </div>
 
             {/* View Details Button */}
-            <button className="w-full mt-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all">
+            <button className="w-full mt-4 py-2 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold transition-all">
               View Details
             </button>
           </motion.div>
@@ -365,7 +366,7 @@ export default function TeacherStudentList() {
               } transition-all duration-300`}
             >
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-red-500 to-rose-600 p-6 text-white">
+              <div className="bg-gradient-to-r from-picton-blue to-baby-blue p-6 text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-2xl border-4 border-white/30">
@@ -381,7 +382,7 @@ export default function TeacherStudentList() {
                       onClick={() => setShowFullDetails(!showFullDetails)}
                       className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all"
                     >
-                      <i className={`fas ${showFullDetails ? 'fa-compress' : 'fa-expand'}`}></i>
+                      <Icon name={showFullDetails ? 'arrowLeft' : 'arrowRight'} size={20} />
                     </button>
                     <button
                       onClick={() => {
@@ -390,7 +391,7 @@ export default function TeacherStudentList() {
                       }}
                       className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all"
                     >
-                      <i className="fas fa-times"></i>
+                      <Icon name="x" size={20} />
                     </button>
                   </div>
                 </div>
@@ -444,9 +445,9 @@ export default function TeacherStudentList() {
                     {/* Action Button */}
                     <button
                       onClick={() => setShowFullDetails(true)}
-                      className="w-full py-3 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white rounded-lg font-semibold transition-all"
+                      className="w-full py-3 bg-gradient-to-r from-picton-blue to-baby-blue hover:from-picton-blue-600 hover:to-baby-blue-600 text-white rounded-lg font-semibold transition-all"
                     >
-                      <i className="fas fa-expand mr-2"></i>
+                      <Icon name="arrowRight" size={20} className="inline mr-2" />
                       View Full Details
                     </button>
                   </div>
@@ -458,34 +459,34 @@ export default function TeacherStudentList() {
                       <div className={`${getAttendanceBgColor(selectedStudent.attendance)} rounded-xl p-6`}>
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-sm text-slate-600 dark:text-slate-400">Attendance</p>
-                          <i className="fas fa-calendar-check text-2xl text-slate-400"></i>
+                          <Icon name="calendar" size={24} className="text-slate-400" />
                         </div>
                         <p className={`text-4xl font-bold ${getAttendanceColor(selectedStudent.attendance)} mb-2`}>
                           {selectedStudent.attendance}%
                         </p>
                         <button
                           onClick={() => navigate('/teacher/student-attendance/' + selectedStudent.id)}
-                          className="text-sm text-red-600 dark:text-red-400 hover:underline"
+                          className="text-sm text-picton-blue hover:underline"
                         >
                           View Full Attendance →
                         </button>
                       </div>
 
-                      <div className="bg-blue-500/20 rounded-xl p-6">
+                      <div className="bg-picton-blue/20 rounded-xl p-6">
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-sm text-slate-600 dark:text-slate-400">CGPA</p>
-                          <i className="fas fa-chart-line text-2xl text-slate-400"></i>
+                          <Icon name="trendingUp" size={24} className="text-slate-400" />
                         </div>
-                        <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{selectedStudent.cgpa}</p>
+                        <p className="text-4xl font-bold text-picton-blue mb-2">{selectedStudent.cgpa}</p>
                         <p className="text-sm text-slate-600 dark:text-slate-400">Out of 10.0</p>
                       </div>
 
-                      <div className="bg-purple-500/20 rounded-xl p-6">
+                      <div className="bg-baby-blue/20 rounded-xl p-6">
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-sm text-slate-600 dark:text-slate-400">Courses</p>
-                          <i className="fas fa-book text-2xl text-slate-400"></i>
+                          <Icon name="book" size={24} className="text-slate-400" />
                         </div>
-                        <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                        <p className="text-4xl font-bold text-baby-blue mb-2">
                           {selectedStudent.courses.length}
                         </p>
                         <p className="text-sm text-slate-600 dark:text-slate-400">Enrolled</p>
@@ -532,7 +533,7 @@ export default function TeacherStudentList() {
                         <h3 className="text-lg font-bold text-slate-800 dark:text-white">Recent Marks</h3>
                         <button
                           onClick={() => navigate('/teacher/student-marks/' + selectedStudent.id)}
-                          className="text-sm text-red-600 dark:text-red-400 hover:underline"
+                          className="text-sm text-picton-blue hover:underline"
                         >
                           View All Marks →
                         </button>
@@ -564,7 +565,7 @@ export default function TeacherStudentList() {
                         {selectedStudent.courses.map((course, index) => (
                           <span
                             key={index}
-                            className="px-4 py-2 bg-red-500/20 text-red-600 dark:text-red-400 rounded-lg font-semibold"
+                            className="px-4 py-2 bg-picton-blue/20 text-picton-blue rounded-lg font-semibold"
                           >
                             {course}
                           </span>

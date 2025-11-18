@@ -73,6 +73,17 @@ if (!password_verify($data->password, $user['password'])) {
     exit();
 }
 
+// Validate role selection matches user's actual role
+if (!empty($data->role) && $data->role !== $user['role']) {
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'error' => 'role_mismatch',
+        'message' => 'You are trying to login as ' . $data->role . ' but your account is registered as ' . $user['role'] . '. Please select the correct role.'
+    ]);
+    exit();
+}
+
 // Check if user is active
 if ($user['status'] !== 'active') {
     http_response_code(403);

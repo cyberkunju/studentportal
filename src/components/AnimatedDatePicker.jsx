@@ -127,14 +127,14 @@ export default function AnimatedDatePicker({ name, value, onChange, label, icon,
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   const borderColors = {
-    teal: 'border-teal-500 focus:ring-teal-500/20',
-    orange: 'border-orange-500 focus:ring-orange-500/20',
+    teal: 'border-picton-blue focus:ring-picton-blue/20',
+    orange: 'border-baby-blue focus:ring-baby-blue/20',
     red: 'border-red-500 focus:ring-red-500/20'
   }
 
   const buttonColors = {
-    teal: 'bg-teal-500 hover:bg-teal-600',
-    orange: 'bg-orange-500 hover:bg-orange-600',
+    teal: 'bg-picton-blue hover:bg-picton-blue-600',
+    orange: 'bg-baby-blue hover:bg-baby-blue-600',
     red: 'bg-red-500 hover:bg-red-600'
   }
 
@@ -156,7 +156,7 @@ export default function AnimatedDatePicker({ name, value, onChange, label, icon,
           }
           setIsOpen(!isOpen)
         }}
-        className={`w-full px-4 py-3 rounded-lg border-2 ${borderColors[borderColor]} bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white cursor-pointer transition-all hover:border-${borderColor}-400 flex items-center justify-between`}
+        className={`w-full px-4 py-3 rounded-lg border-2 ${borderColors[borderColor]} bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue cursor-pointer transition-all hover:border-picton-blue flex items-center justify-between`}
       >
         <span className={selectedDate ? '' : 'text-slate-400'}>
           {formatDisplayDate(selectedDate)}
@@ -253,8 +253,8 @@ export default function AnimatedDatePicker({ name, value, onChange, label, icon,
                             ? (() => {
                                 const ref = isReferenceDate(date)
                                 const colors = {
-                                  teal: 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 border-2 border-teal-400 dark:border-teal-600',
-                                  orange: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border-2 border-orange-400 dark:border-orange-600',
+                                  teal: 'bg-picton-blue/10 dark:bg-picton-blue/20 text-picton-blue dark:text-picton-blue-400 border-2 border-picton-blue',
+                                  orange: 'bg-baby-blue/10 dark:bg-baby-blue/20 text-baby-blue dark:text-baby-blue-400 border-2 border-baby-blue',
                                   red: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-2 border-red-400 dark:border-red-600'
                                 }
                                 return colors[ref.color] || colors.teal

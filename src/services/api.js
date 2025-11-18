@@ -660,3 +660,23 @@ class ApiService {
 }
 
 export default new ApiService();
+
+// Assignment Management APIs (added for teacher assignments feature)
+ApiService.prototype.getTeacherAssignments = async function() {
+  return this.request('/teacher/assignments/list.php');
+};
+
+ApiService.prototype.createAssignment = async function(assignmentData) {
+  return this.request('/teacher/assignments/create.php', {
+    method: 'POST',
+    body: JSON.stringify(assignmentData),
+  });
+};
+
+ApiService.prototype.getAssignmentSubmissions = async function(assignmentId) {
+  return this.request(`/teacher/assignments/submissions.php?assignment_id=${assignmentId}`);
+};
+
+ApiService.prototype.getStudentProfile = async function() {
+  return this.request('/student/profile.php');
+};

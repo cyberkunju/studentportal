@@ -6,12 +6,13 @@ This document outlines the comprehensive design for the frontend UI overhaul of 
 
 ### Design Goals
 
-1. **Visual Cohesion**: Implement a unified color palette across all user interfaces (Student, Teacher, Admin)
+1. **Visual Cohesion**: Implement a unified blue-themed color palette across all user interfaces (Student, Teacher, Admin)
 2. **Modern Aesthetics**: Enhance glassmorphic design elements for a contemporary look
 3. **Minimalism**: Remove unnecessary visual noise, including emoji icons and excessive animations
 4. **Accessibility**: Maintain WCAG AA standards while improving visual appeal
 5. **Responsiveness**: Ensure full-screen layouts that adapt seamlessly across devices
 6. **Performance**: Optimize animations and rendering for smooth user experience
+7. **Backend Integration**: Ensure 100% perfect integration with all backend APIs and functionality
 
 ## Architecture
 
@@ -62,58 +63,71 @@ Design System
 ```javascript
 // Tailwind Config Extension
 colors: {
-  // Primary Colors
-  gunmetal: {
-    DEFAULT: '#2a2d34',
-    50: '#f5f5f6',
-    100: '#e6e6e8',
-    200: '#cccdd1',
-    300: '#a8aab1',
-    400: '#7d8089',
-    500: '#5f626c',
-    600: '#4d4f58',
-    700: '#3b3d43',
-    800: '#2a2d34', // Base
-    900: '#1f2126',
+  // Primary Colors - Blue Theme
+  'alice-blue': {
+    DEFAULT: '#f2faff',
+    50: '#f2faff', // Base - Lightest background
+    100: '#e6f5ff',
+    200: '#ccebff',
+    300: '#b3e0ff',
+    400: '#99d6ff',
+    500: '#80ccff',
+    600: '#66c2ff',
+    700: '#4db8ff',
+    800: '#33adff',
+    900: '#1aa3ff',
   },
-  'lavender-blush': {
-    DEFAULT: '#eee5e9',
-    50: '#fdfcfd',
-    100: '#faf8f9',
-    200: '#f6f2f4',
-    300: '#f2ecef',
-    400: '#eee5e9', // Base
-    500: '#d9cdd3',
-    600: '#c4b5bd',
-    700: '#9d8a94',
-    800: '#76606b',
-    900: '#4f3642',
+  'rich-black': {
+    DEFAULT: '#001926',
+    50: '#e6f0f5',
+    100: '#cce0eb',
+    200: '#99c2d6',
+    300: '#66a3c2',
+    400: '#3385ad',
+    500: '#006699',
+    600: '#00527a',
+    700: '#003d5c',
+    800: '#00293d',
+    900: '#001926', // Base - Darkest background
   },
-  'celestial-blue': {
-    DEFAULT: '#009ddc',
+  'picton-blue': {
+    DEFAULT: '#00a9ff',
     50: '#e6f7ff',
-    100: '#b3e5ff',
-    200: '#80d4ff',
-    300: '#4dc2ff',
-    400: '#1ab0ff',
-    500: '#009ddc', // Base
-    600: '#007db0',
-    700: '#005d84',
-    800: '#003e58',
-    900: '#001e2c',
+    100: '#ccefff',
+    200: '#99dfff',
+    300: '#66cfff',
+    400: '#33bfff',
+    500: '#00a9ff', // Base - Primary action color
+    600: '#0087cc',
+    700: '#006599',
+    800: '#004366',
+    900: '#002233',
   },
-  'giants-orange': {
-    DEFAULT: '#f26430',
-    50: '#fff4f0',
-    100: '#ffe0d6',
-    200: '#ffccbd',
-    300: '#ffb8a3',
-    400: '#ffa48a',
-    500: '#f26430', // Base
-    600: '#d94e1a',
-    700: '#c03a0a',
-    800: '#8a2a07',
-    900: '#541a04',
+  'baby-blue': {
+    DEFAULT: '#89cff3',
+    50: '#f0f9fd',
+    100: '#e1f3fb',
+    200: '#c3e7f7',
+    300: '#a6dbf3',
+    400: '#89cff3', // Base - Secondary/accent
+    500: '#6bc3ef',
+    600: '#4eb7eb',
+    700: '#30abe7',
+    800: '#139fe3',
+    900: '#0f8ac4',
+  },
+  'non-photo-blue': {
+    DEFAULT: '#a0e9ff',
+    50: '#f5fcff',
+    100: '#ebf9ff',
+    200: '#d6f3ff',
+    300: '#c2edff',
+    400: '#aeeaff',
+    500: '#a0e9ff', // Base - Lightest accent
+    600: '#8be4ff',
+    700: '#76dfff',
+    800: '#61daff',
+    900: '#4cd5ff',
   },
 }
 ```
@@ -121,16 +135,18 @@ colors: {
 #### Theme Application
 
 **Light Mode:**
-- Background: Lavender Blush (#eee5e9) with subtle gradient
-- Text: Gunmetal (#2a2d34) for primary text
+- Background: Alice Blue (#f2faff) with subtle gradient to Non-Photo Blue
+- Text: Rich Black (#001926) for primary text
 - Cards: White with 20-30% opacity + backdrop-blur
-- Borders: White with 20% opacity
+- Borders: Picton Blue with 10-20% opacity
+- Accents: Picton Blue (#00a9ff) for primary actions, Baby Blue (#89cff3) for secondary
 
 **Dark Mode:**
-- Background: Gunmetal (#2a2d34) with subtle gradient
-- Text: Lavender Blush (#eee5e9) for primary text
-- Cards: Gray-800 with 20-30% opacity + backdrop-blur
-- Borders: Gray-700 with 20% opacity
+- Background: Rich Black (#001926) with subtle gradient to darker shades
+- Text: Alice Blue (#f2faff) for primary text
+- Cards: Rich Black with 20-30% opacity + backdrop-blur
+- Borders: Baby Blue with 10-20% opacity
+- Accents: Picton Blue (#00a9ff) for primary actions, Baby Blue (#89cff3) for secondary
 
 
 ### 2. Glassmorphic Design System
@@ -155,6 +171,10 @@ className="
 2. **Enhanced Glass** (30% opacity): Used for interactive elements and modals
 3. **Subtle Glass** (10% opacity): Used for background sections
 4. **Frosted Glass** (40% opacity + blur-2xl): Used for overlays and navigation
+
+**Color-specific Glass Effects:**
+- Light mode: White/Alice Blue base with Picton Blue tints
+- Dark mode: Rich Black base with Baby Blue tints
 
 #### Implementation Pattern
 
@@ -417,18 +437,18 @@ Navigation Bar (Fixed Bottom)
 - Gap between icon and text: 8px
 
 **Active State:**
-- Background: Celestial Blue (#009ddc)
+- Background: Picton Blue (#00a9ff)
 - Text Color: White
 - Animated pill with spring physics
 - layoutId for smooth transitions
 
 **Inactive State:**
-- Text Color: Gunmetal (light mode) / Lavender Blush (dark mode) with 60% opacity
-- Hover: Background with 10% opacity of Celestial Blue
+- Text Color: Rich Black (light mode) / Alice Blue (dark mode) with 60% opacity
+- Hover: Background with 10% opacity of Picton Blue
 
 **Logout Button:**
-- Hover: Background with 10% opacity of Giants Orange
-- Text Color: Giants Orange on hover
+- Hover: Background with 10% opacity of Baby Blue
+- Text Color: Baby Blue on hover
 
 
 ### 7. Form Components Design
@@ -441,13 +461,13 @@ className="
   w-full 
   px-4 py-3 
   rounded-lg 
-  border border-gray-300 dark:border-gray-600 
-  bg-white/50 dark:bg-gray-700/50 
-  text-gunmetal dark:text-lavender-blush 
+  border border-baby-blue/30 dark:border-baby-blue/20 
+  bg-white/50 dark:bg-rich-black/50 
+  text-rich-black dark:text-alice-blue 
   placeholder-gray-400 dark:placeholder-gray-500 
   focus:outline-none 
-  focus:border-celestial-blue 
-  focus:ring-2 focus:ring-celestial-blue/20
+  focus:border-picton-blue 
+  focus:ring-2 focus:ring-picton-blue/20
   transition-all duration-200
 "
 ```
@@ -456,18 +476,18 @@ className="
 - Trigger: Same styling as text input
 - Dropdown: Glass card with enhanced opacity
 - Options: List with hover states
-- Selected: Celestial Blue background with white text
-- Hover: Subtle Celestial Blue background (10% opacity)
+- Selected: Picton Blue background with white text
+- Hover: Subtle Picton Blue background (10% opacity)
 - Animation: Scale and fade on open/close
 - Icon: Chevron with rotation animation
 
 **Button Variants:**
 
-1. **Primary Button (Celestial Blue):**
+1. **Primary Button (Picton Blue):**
 ```jsx
 className="
   px-6 py-3 
-  bg-celestial-blue hover:bg-celestial-blue-600 
+  bg-picton-blue hover:bg-picton-blue-600 
   text-white 
   font-semibold 
   rounded-lg 
@@ -477,11 +497,11 @@ className="
 "
 ```
 
-2. **Secondary Button (Giants Orange):**
+2. **Secondary Button (Baby Blue):**
 ```jsx
 className="
   px-6 py-3 
-  bg-giants-orange hover:bg-giants-orange-600 
+  bg-baby-blue hover:bg-baby-blue-600 
   text-white 
   font-semibold 
   rounded-lg 
@@ -496,11 +516,11 @@ className="
 className="
   px-6 py-3 
   bg-transparent 
-  border-2 border-celestial-blue 
-  text-celestial-blue dark:text-celestial-blue-400 
+  border-2 border-picton-blue 
+  text-picton-blue dark:text-picton-blue-400 
   font-semibold 
   rounded-lg 
-  hover:bg-celestial-blue/10 
+  hover:bg-picton-blue/10 
   transition-all duration-200
 "
 ```
@@ -577,8 +597,8 @@ Login Page
 #### Visual Design
 
 **Background:**
-- Light mode: Gradient from Lavender Blush to lighter tints
-- Dark mode: Gradient from Gunmetal to darker shades
+- Light mode: Gradient from Alice Blue to Non-Photo Blue
+- Dark mode: Gradient from Rich Black to darker shades
 - Subtle pattern or texture (optional)
 
 **Login Card:**
@@ -590,7 +610,7 @@ Login Page
 
 **Role Selector:**
 - Horizontal pill container with glass background
-- Active indicator: Celestial Blue pill with spring animation
+- Active indicator: Picton Blue pill with spring animation
 - Inactive text: Muted color
 - Active text: White
 - Hover: Temporary highlight on inactive options
@@ -602,7 +622,7 @@ Login Page
 
 **Login Button:**
 - Full width
-- Primary button styling (Celestial Blue)
+- Primary button styling (Picton Blue)
 - Loading state: Spinner icon with disabled state
 
 ### 10. Admin/Teacher Interface Design
@@ -738,15 +758,15 @@ interface NavigationItemProps {
 ### Visual Error States
 
 **Form Validation Errors:**
-- Border color: Giants Orange
-- Error message: Small text below input in Giants Orange
-- Icon: Exclamation circle in Giants Orange
+- Border color: Red (#ef4444)
+- Error message: Small text below input in Red
+- Icon: Exclamation circle in Red
 
 **Toast Notifications:**
 - Success: Green gradient with check icon
 - Error: Red gradient with X icon
-- Warning: Giants Orange gradient with exclamation icon
-- Info: Celestial Blue gradient with info icon
+- Warning: Baby Blue gradient with exclamation icon
+- Info: Picton Blue gradient with info icon
 
 **Empty States:**
 - Large icon (64px) in muted color
@@ -754,9 +774,9 @@ interface NavigationItemProps {
 - Optional action button
 
 **Loading States:**
-- Spinner: Celestial Blue
+- Spinner: Picton Blue
 - Skeleton screens: Pulsing glass cards
-- Progress bars: Celestial Blue gradient
+- Progress bars: Picton Blue gradient
 
 ### Error Recovery
 
@@ -853,6 +873,51 @@ interface NavigationItemProps {
 - Modal opens and closes correctly
 - Toast notifications appear and dismiss
 
+## Backend Integration Strategy
+
+### API Integration Requirements
+
+**Authentication:**
+- JWT token management with localStorage persistence
+- Automatic token refresh on API calls
+- Role-based routing (Student, Teacher, Admin)
+- Secure logout with token cleanup
+
+**Student APIs:**
+- GET /api/student/get_profile.php - Profile data
+- GET /api/student/get_marks.php - Marks and grades (GP/CP/GPA/CGPA)
+- GET /api/student/get_attendance.php - Attendance records
+- GET /api/student/get_fees.php - Fee structure and deadlines
+- GET /api/student/get_payments.php - Payment history
+- GET /api/student/download_receipt.php - PDF receipt generation
+- GET /api/student/download_id_card.php - Virtual ID card PDF
+- GET /api/student/download_performance_report.php - Performance PDF
+
+**Teacher APIs:**
+- GET /api/teacher/get_students.php - Student list
+- POST /api/teacher/mark_attendance.php - Mark attendance
+- GET /api/teacher/get_attendance_report.php - Attendance reports
+- POST /api/teacher/enter_marks.php - Enter marks
+- PUT /api/teacher/update_marks.php - Update marks
+
+**Admin APIs:**
+- Full CRUD for Students, Teachers, Subjects, Fees, Payments
+- Session and Semester management
+- Notice management
+- Report generation (Performance, Financial, Trends)
+
+**Error Handling:**
+- Display user-friendly error messages with Toast notifications
+- Handle network errors gracefully
+- Validate form inputs before API calls
+- Show loading states during API operations
+
+**Data Synchronization:**
+- Real-time updates for notices
+- Automatic refresh of dashboard data
+- Optimistic UI updates for better UX
+- Cache management for frequently accessed data
+
 ## Implementation Phases
 
 ### Phase 1: Foundation (Design System Setup)
@@ -930,11 +995,13 @@ interface NavigationItemProps {
 ### Color Palette Choice
 
 **Rationale:**
-- Gunmetal provides a sophisticated, professional dark base
-- Lavender Blush offers a soft, approachable light base
-- Celestial Blue is vibrant yet professional for primary actions
-- Giants Orange provides strong contrast for warnings and secondary actions
-- Combination creates modern, trustworthy aesthetic suitable for educational platform
+- Rich Black provides a deep, professional dark base with blue undertones
+- Alice Blue offers a clean, fresh light base that's easy on the eyes
+- Picton Blue is vibrant and energetic for primary actions and CTAs
+- Baby Blue provides softer secondary accents and hover states
+- Non-Photo Blue adds subtle highlights and tertiary accents
+- Blue-themed palette creates cohesive, trustworthy, and modern aesthetic perfect for educational platforms
+- Color harmony throughout the spectrum ensures visual consistency
 
 ### Glassmorphic Design
 
@@ -993,7 +1060,7 @@ interface NavigationItemProps {
 ### Keyboard Navigation
 
 - Logical tab order throughout application
-- Focus indicators styled with Celestial Blue
+- Focus indicators styled with Picton Blue
 - All interactive elements keyboard accessible
 - Modal traps focus appropriately
 - Skip links for main content

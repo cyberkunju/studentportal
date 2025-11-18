@@ -255,7 +255,7 @@ export default function AdminCourses() {
               placeholder="Search courses by name or code..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
             />
           </div>
         </div>
@@ -385,7 +385,7 @@ export default function AdminCourses() {
                       value={courseForm.courseCode}
                       onChange={handleInputChange}
                       placeholder="e.g., CS101"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                     />
                   </div>
 
@@ -399,7 +399,7 @@ export default function AdminCourses() {
                       value={courseForm.courseName}
                       onChange={handleInputChange}
                       placeholder="e.g., Introduction to Computer Science"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                     />
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default function AdminCourses() {
                     onChange={handleInputChange}
                     rows="4"
                     placeholder="Brief description of the course content and objectives..."
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                   ></textarea>
                 </div>
 

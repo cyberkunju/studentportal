@@ -666,7 +666,7 @@ Thank you.`,
                     name="amount"
                     value={feeNotice.amount}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -733,7 +733,7 @@ Thank you.`,
                       name="fineAmount"
                       value={feeNotice.fineAmount}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
                     />
                   </motion.div>
                 </div>
@@ -771,7 +771,7 @@ Thank you.`,
                       name="superFineAmount"
                       value={feeNotice.superFineAmount}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
                     />
                   </motion.div>
                 </div>
@@ -795,7 +795,7 @@ Thank you.`,
                 onChange={handleInputChange}
                 rows="4"
                 placeholder="Add any additional information or instructions for students..."
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all resize-none"
               ></textarea>
             </motion.div>
 

@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import Navigation from '../components/Navigation'
 import ThemeToggle from '../components/ThemeToggle'
+import Icon from '../components/Icon'
 import api from '../services/api'
 
 export default function Payments() {
@@ -69,7 +70,12 @@ export default function Payments() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-slate-800 dark:text-white">Loading payments...</div>
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-picton-blue rounded-2xl mb-4 animate-pulse">
+            <Icon name="creditCard" size={32} color="white" ariaLabel="Loading" />
+          </div>
+          <div className="text-xl text-rich-black dark:text-alice-blue font-medium">Loading payments...</div>
+        </div>
       </div>
     )
   }
@@ -77,11 +83,15 @@ export default function Payments() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-xl text-red-600 dark:text-red-400 mb-4">{error}</div>
+        <div className="text-center max-w-md">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-2xl mb-4">
+            <Icon name="exclamationCircle" size={32} className="text-red-600 dark:text-red-400" ariaLabel="Error" />
+          </div>
+          <div className="text-xl text-rich-black dark:text-alice-blue font-semibold mb-2">Failed to Load</div>
+          <div className="text-rich-black/60 dark:text-alice-blue/60 mb-6">{error}</div>
           <button
             onClick={fetchPaymentData}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="px-6 py-3 bg-picton-blue text-white rounded-xl hover:bg-picton-blue-600 font-semibold transition-all duration-200 active:scale-95"
           >
             Retry
           </button>
@@ -110,68 +120,71 @@ export default function Payments() {
     return (
       <div
         key={index}
-        className={`p-5 rounded-xl transition-all border-2 ${
+        className={`p-5 rounded-xl transition-all duration-200 border ${
           isOverdue
-            ? 'bg-red-500/10 dark:bg-red-500/20 hover:bg-red-500/20 dark:hover:bg-red-500/30 border-red-500/50'
-            : 'bg-orange-500/10 dark:bg-orange-500/20 hover:bg-orange-500/20 dark:hover:bg-orange-500/30 border-orange-500/30'
+            ? 'bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl border-[#E74C3C]/30 hover:shadow-xl'
+            : 'bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl border-[#F2C94C]/30 hover:shadow-xl'
         }`}
       >
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-start gap-4 flex-1">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
-              isOverdue ? 'bg-red-500/20 text-red-500' : 'bg-orange-500/20 text-orange-500'
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+              isOverdue ? 'bg-[#E74C3C]/10' : 'bg-[#F2C94C]/10'
             }`}>
-              <div className="text-2xl">{isOverdue ? '⚠️' : '🕐'}</div>
+              <Icon name={isOverdue ? "exclamationCircle" : "clock"} size={24} className={isOverdue ? "text-[#E74C3C]" : "text-[#F2C94C]"} />
             </div>
             <div className="flex-1">
-              <h3 className="font-bold text-lg text-slate-800 dark:text-white mb-1">
+              <h3 className="font-bold text-lg text-rich-black dark:text-alice-blue mb-1">
                 {fee.fee_name}
               </h3>
               <div className="space-y-1 text-sm">
-                <p className="text-slate-600 dark:text-slate-400">
-                  📅 Due: {new Date(fee.due_date).toLocaleDateString('en-IN', { 
+                <p className="text-rich-black/60 dark:text-alice-blue/60">
+                  <Icon name="calendar" size={16} className="inline mr-1" />
+                  Due: {new Date(fee.due_date).toLocaleDateString('en-IN', { 
                     weekday: 'short', 
                     year: 'numeric', 
                     month: 'short', 
                     day: 'numeric' 
                   })}
                   {!isOverdue && daysRemaining > 0 && (
-                    <span className="ml-2 text-orange-600 dark:text-orange-400 font-semibold">
+                    <span className="ml-2 text-[#F2C94C] font-semibold">
                       ({daysRemaining} days left)
                     </span>
                   )}
                   {isOverdue && (
-                    <span className="ml-2 text-red-600 dark:text-red-400 font-bold">
-                      ⚠️ OVERDUE
+                    <span className="ml-2 px-2 py-0.5 bg-[#E74C3C]/20 text-[#E74C3C] rounded font-bold text-xs">
+                      OVERDUE
                     </span>
                   )}
                 </p>
                 {fee.description && (
-                  <p className="text-slate-600 dark:text-slate-400">
-                    📝 {fee.description}
+                  <p className="text-rich-black/60 dark:text-alice-blue/60">
+                    <Icon name="document" size={16} className="inline mr-1" />
+                    {fee.description}
                   </p>
                 )}
               </div>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-slate-800 dark:text-white">
+            <p className="text-2xl font-bold text-rich-black dark:text-alice-blue">
               ₹{parseFloat(fee.amount).toLocaleString()}
             </p>
             {fee.current_late_fine > 0 && (
-              <p className="text-lg font-bold text-red-600 dark:text-red-400 mt-1">
+              <p className="text-lg font-bold text-[#E74C3C] mt-1">
                 + ₹{parseFloat(fee.current_late_fine).toLocaleString()} (Fine)
               </p>
             )}
           </div>
         </div>
         
-        <div className="mt-4 pt-4 border-t border-slate-300 dark:border-slate-600">
+        <div className="mt-4 pt-4 border-t border-rich-black/10 dark:border-alice-blue/10">
           <button
             onClick={() => handlePayNow(fee)}
-            className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+            className="w-full py-3 bg-picton-blue hover:bg-picton-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-95"
           >
-            💳 Pay Now - ₹{totalAmount.toLocaleString()}
+            <Icon name="creditCard" size={20} className="text-white" />
+            Pay Now - ₹{totalAmount.toLocaleString()}
           </button>
         </div>
       </div>
@@ -182,51 +195,54 @@ export default function Payments() {
     return (
       <div
         key={index}
-        className="p-5 rounded-xl transition-all border-2 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800/70 border-green-500/40"
+        className="p-5 rounded-xl transition-all duration-200 bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl border border-[#00B894]/30 hover:shadow-xl"
       >
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-start gap-4 flex-1">
-            <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-green-500/20 text-green-500">
-              <div className="text-2xl">✅</div>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#00B894]/10">
+              <Icon name="checkCircle" size={24} className="text-[#00B894]" />
             </div>
             <div className="flex-1">
-              <h3 className="font-bold text-lg text-slate-800 dark:text-white mb-1">
+              <h3 className="font-bold text-lg text-rich-black dark:text-alice-blue mb-1">
                 {payment.fee_name}
               </h3>
               <div className="space-y-1 text-sm">
-                <p className="text-slate-600 dark:text-slate-400">
-                  📅 Paid on: {new Date(payment.payment_date).toLocaleDateString('en-IN', { 
+                <p className="text-rich-black/60 dark:text-alice-blue/60">
+                  <Icon name="calendar" size={16} className="inline mr-1" />
+                  Paid on: {new Date(payment.payment_date).toLocaleDateString('en-IN', { 
                     weekday: 'short', 
                     year: 'numeric', 
                     month: 'short', 
                     day: 'numeric' 
                   })}
                 </p>
-                <p className="text-slate-600 dark:text-slate-400">
-                  🧾 Receipt: {payment.receipt_number}
+                <p className="text-rich-black/60 dark:text-alice-blue/60">
+                  <Icon name="document" size={16} className="inline mr-1" />
+                  Receipt: {payment.receipt_number}
                 </p>
-                <p className="text-slate-600 dark:text-slate-400">
-                  💳 Method: {payment.payment_method}
+                <p className="text-rich-black/60 dark:text-alice-blue/60">
+                  <Icon name="creditCard" size={16} className="inline mr-1" />
+                  Method: {payment.payment_method}
                 </p>
               </div>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-slate-800 dark:text-white">
+            <p className="text-2xl font-bold text-rich-black dark:text-alice-blue">
               ₹{parseFloat(payment.amount_paid).toLocaleString()}
             </p>
             {payment.late_fine > 0 && (
-              <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+              <p className="text-sm text-[#E74C3C] mt-1">
                 (includes ₹{parseFloat(payment.late_fine).toLocaleString()} fine)
               </p>
             )}
-            <span className="inline-block mt-2 px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full">
+            <span className="inline-block mt-2 px-3 py-1 bg-[#00B894]/20 text-[#00B894] text-xs font-bold rounded-full">
               PAID
             </span>
           </div>
         </div>
         
-        <div className="mt-4 pt-4 border-t border-slate-300 dark:border-slate-600">
+        <div className="mt-4 pt-4 border-t border-rich-black/10 dark:border-alice-blue/10">
           <button
             onClick={async () => {
               try {
@@ -236,9 +252,10 @@ export default function Payments() {
                 alert(`❌ Failed to download receipt: ${error.message}`)
               }
             }}
-            className="w-full py-3 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+            className="w-full py-3 bg-baby-blue hover:bg-baby-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-95"
           >
-            📥 Download Receipt
+            <Icon name="download" size={20} className="text-white" />
+            Download Receipt
           </button>
         </div>
       </div>
@@ -256,37 +273,44 @@ export default function Payments() {
       >
         {/* Top Header */}
         <header className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Fee Payments</h1>
+          <h1 className="text-3xl font-bold text-rich-black dark:text-alice-blue">Fee Payments</h1>
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name || 'Student'}</span>
+            <span className="text-rich-black/80 dark:text-alice-blue/80 font-medium">{user?.full_name || 'Student'}</span>
             {user?.profile_image ? (
               <img 
                 src={user.profile_image} 
                 alt={user.full_name} 
-                className="w-10 h-10 rounded-full object-cover border-2 border-indigo-500"
+                className="w-10 h-10 rounded-full object-cover border-2 border-picton-blue"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">
+              <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white font-bold">
                 {user?.full_name?.charAt(0) || 'S'}
               </div>
             )}
           </div>
         </header>
 
-        <p className="text-slate-600 dark:text-slate-400 mb-8">Manage your payments and dues</p>
+        <p className="text-rich-black/60 dark:text-alice-blue/60 mb-8">Manage your payments and dues</p>
 
         <div className="space-y-8">
           {/* Overdue Fees Section */}
           {overdueFees.length > 0 && (
-            <div className="bg-red-500/10 dark:bg-red-500/20 backdrop-blur-xl rounded-2xl p-6 border-2 border-red-500/50 shadow-lg">
-              <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 flex items-center gap-3">
-                  ⚠️ Overdue Fees ({overdueFees.length})
+            <div className="bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl rounded-2xl p-6 border border-[#E74C3C]/30 shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-rich-black dark:text-alice-blue flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#E74C3C]/10 flex items-center justify-center">
+                    <Icon name="exclamationCircle" size={20} className="text-[#E74C3C]" />
+                  </div>
+                  Overdue Fees
                 </h2>
+                <span className="px-3 py-1 bg-[#E74C3C]/20 text-[#E74C3C] rounded-full text-sm font-semibold">
+                  {overdueFees.length} Overdue
+                </span>
               </div>
-              <p className="text-red-700 dark:text-red-300 mb-4">
-                ℹ️ These payments are past their due date. Additional fines may apply.
+              <p className="text-rich-black/60 dark:text-alice-blue/60 mb-4 flex items-center gap-2">
+                <Icon name="infoCircle" size={16} />
+                These payments are past their due date. Additional fines may apply.
               </p>
               <div className="space-y-4">
                 {overdueFees.map((fee, index) => renderFee(fee, `overdue_${index}`, true))}
@@ -296,14 +320,21 @@ export default function Payments() {
 
           {/* Pending Fees Section */}
           {pendingFees.length > 0 && (
-            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
-              <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
-                  🕐 Pending Fees ({pendingFees.length})
+            <div className="bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl rounded-2xl p-6 border border-[#F2C94C]/30 shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-rich-black dark:text-alice-blue flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#F2C94C]/10 flex items-center justify-center">
+                    <Icon name="clock" size={20} className="text-[#F2C94C]" />
+                  </div>
+                  Pending Fees
                 </h2>
+                <span className="px-3 py-1 bg-[#F2C94C]/20 text-[#F2C94C] rounded-full text-sm font-semibold">
+                  {pendingFees.length} Pending
+                </span>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 mb-4">
-                ℹ️ Pay before the due date to avoid fines.
+              <p className="text-rich-black/60 dark:text-alice-blue/60 mb-4 flex items-center gap-2">
+                <Icon name="infoCircle" size={16} />
+                Pay before the due date to avoid fines.
               </p>
               <div className="space-y-4">
                 {pendingFees.map((fee, index) => renderFee(fee, `pending_${index}`, false))}
@@ -313,11 +344,17 @@ export default function Payments() {
 
           {/* Paid Fees Section */}
           {paymentHistory.length > 0 && (
-            <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg">
-              <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
-                  ✅ Payment History ({paymentHistory.length})
+            <div className="bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl rounded-2xl p-6 border border-[#00B894]/30 shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-rich-black dark:text-alice-blue flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#00B894]/10 flex items-center justify-center">
+                    <Icon name="checkCircle" size={20} className="text-[#00B894]" />
+                  </div>
+                  Payment History
                 </h2>
+                <span className="px-3 py-1 bg-[#00B894]/20 text-[#00B894] rounded-full text-sm font-semibold">
+                  {paymentHistory.length} Paid
+                </span>
               </div>
               <div className="space-y-4">
                 {paymentHistory.map((payment, index) => renderPayment(payment, `paid_${index}`))}
@@ -327,9 +364,11 @@ export default function Payments() {
 
           {/* No Payments */}
           {fees.length === 0 && paymentHistory.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl text-green-500 mb-4">✅</div>
-              <p className="text-slate-600 dark:text-slate-400 text-lg">No fee payments found!</p>
+            <div className="bg-white/80 dark:bg-[#0A2939]/80 backdrop-blur-xl rounded-2xl p-12 border border-rich-black/10 dark:border-alice-blue/10 shadow-lg text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#00B894]/10 flex items-center justify-center">
+                <Icon name="checkCircle" size={32} className="text-[#00B894]" />
+              </div>
+              <p className="text-rich-black/60 dark:text-alice-blue/60 text-lg">No fee payments found!</p>
             </div>
           )}
         </div>

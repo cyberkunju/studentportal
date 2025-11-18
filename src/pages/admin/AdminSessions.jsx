@@ -478,7 +478,7 @@ export default function AdminSessions() {
                     required
                     className={`w-full px-4 py-3 rounded-lg border ${
                       formErrors.session_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all`}
+                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all`}
                   />
                   {formErrors.session_name && (
                     <p className="text-red-500 text-sm mt-1">{formErrors.session_name}</p>
@@ -501,7 +501,7 @@ export default function AdminSessions() {
                     required
                     className={`w-full px-4 py-3 rounded-lg border ${
                       formErrors.start_year ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all`}
+                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all`}
                   />
                   {formErrors.start_year && (
                     <p className="text-red-500 text-sm mt-1">{formErrors.start_year}</p>
@@ -524,7 +524,7 @@ export default function AdminSessions() {
                     required
                     className={`w-full px-4 py-3 rounded-lg border ${
                       formErrors.end_year ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-white/70 dark:focus:bg-gray-700/70 transition-all`}
+                    } bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-picton-blue focus:ring-2 focus:ring-picton-blue/20 transition-all`}
                   />
                   {formErrors.end_year && (
                     <p className="text-red-500 text-sm mt-1">{formErrors.end_year}</p>

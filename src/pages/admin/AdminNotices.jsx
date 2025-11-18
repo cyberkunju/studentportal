@@ -349,7 +349,7 @@ export default function AdminNotices() {
                     onChange={handleInputChange}
                     placeholder="Enter notice title"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-red-500 transition-all"
                   />
                 </div>
 
@@ -364,7 +364,7 @@ export default function AdminNotices() {
                       value={formData.category}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white focus:outline-none focus:border-red-500 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue focus:outline-none focus:border-red-500 transition-all"
                     >
                       {categories.map(cat => (
                         <option key={cat.value} value={cat.value}>{cat.label}</option>
@@ -381,7 +381,7 @@ export default function AdminNotices() {
                       value={formData.priority}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white focus:outline-none focus:border-red-500 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue focus:outline-none focus:border-red-500 transition-all"
                     >
                       {priorities.map(pri => (
                         <option key={pri.value} value={pri.value}>{pri.label}</option>
@@ -402,7 +402,7 @@ export default function AdminNotices() {
                     placeholder="Enter notice content or description"
                     required
                     rows="6"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-700/50 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-red-500 transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-baby-blue/30 dark:border-baby-blue/20 bg-white/50 dark:bg-rich-black/50 text-rich-black dark:text-alice-blue placeholder-slate-400 focus:outline-none focus:border-red-500 transition-all"
                   ></textarea>
                 </div>
 

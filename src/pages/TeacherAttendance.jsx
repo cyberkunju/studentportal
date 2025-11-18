@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import ThemeToggle from '../components/ThemeToggle'
+import Icon from '../components/Icon'
 import api from '../services/api'
 
 export default function TeacherAttendance() {
@@ -171,31 +172,31 @@ export default function TeacherAttendance() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => selectedCourse ? setSelectedCourse(null) : navigate('/teacher/dashboard')}
-            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all"
+            className="w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-picton-blue/10 transition-all"
           >
-            <div>←</div>
+            <Icon name="arrowLeft" size={20} className="text-slate-800 dark:text-white" />
           </button>
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Attendance Management</h1>
         </div>
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <span className="text-slate-700 dark:text-slate-300 font-medium">{user?.full_name}</span>
-          <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white">
-            <div className="text-lg">📅</div>
+          <div className="w-10 h-10 rounded-full bg-picton-blue flex items-center justify-center text-white">
+            <Icon name="calendar" size={20} />
           </div>
         </div>
       </header>
 
       {/* Date Banner */}
-      <div className="bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl p-6 mb-8 text-white shadow-2xl">
+      <div className="bg-gradient-to-r from-picton-blue to-baby-blue rounded-2xl p-6 mb-8 text-white shadow-2xl">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-              <div className="text-3xl">📅</div>
+              <Icon name="calendar" size={32} />
             </div>
             <div>
               <h2 className="text-2xl font-bold">{getTodayDate()}</h2>
-              <p className="text-orange-100">Mark attendance for your class</p>
+              <p className="text-white/80">Mark attendance for your class</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -204,14 +205,14 @@ export default function TeacherAttendance() {
               type="date"
               value={attendanceDate}
               onChange={(e) => setAttendanceDate(e.target.value)}
-              className="px-3 py-2 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="px-3 py-2 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-picton-blue"
             />
           </div>
           {selectedCourse && (
             <div className="text-right">
-              <p className="text-sm text-orange-100">Selected Course</p>
+              <p className="text-sm text-white/80">Selected Course</p>
               <p className="text-xl font-bold">{selectedCourse.name}</p>
-              <p className="text-orange-100 text-sm">{selectedCourse.code}</p>
+              <p className="text-white/80 text-sm">{selectedCourse.code}</p>
             </div>
           )}
         </div>
@@ -223,7 +224,7 @@ export default function TeacherAttendance() {
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Select Your Course</h2>
           {courses.length === 0 ? (
             <div className="text-center py-12 bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-8 border border-white/20">
-              <div className="text-6xl text-slate-300 dark:text-slate-600 mb-4">📚</div>
+              <Icon name="book" size={64} className="text-slate-300 dark:text-slate-600 mx-auto mb-4" />
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-2">No courses available</p>
               <p className="text-slate-500 dark:text-slate-500 text-sm">No subjects assigned to you</p>
             </div>
@@ -234,19 +235,19 @@ export default function TeacherAttendance() {
                 key={course.id}
                 whileHover={{ scale: 1.02, y: -5 }}
                 onClick={() => handleCourseSelect(course)}
-                className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-all"
+                className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg cursor-pointer hover:bg-picton-blue/10 transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center">
-                    <div className="text-2xl">📖</div>
+                  <div className="w-12 h-12 rounded-full bg-picton-blue/20 flex items-center justify-center">
+                    <Icon name="book" size={24} className="text-picton-blue" />
                   </div>
-                  <span className="px-3 py-1 bg-orange-500/20 text-orange-600 dark:text-orange-400 rounded-full text-sm font-semibold">
+                  <span className="px-3 py-1 bg-picton-blue/20 text-picton-blue rounded-full text-sm font-semibold">
                     Sem {course.semester}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{course.name}</h3>
                 <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">{course.code}</p>
-                <button className="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all">
+                <button className="w-full px-4 py-2 bg-picton-blue hover:bg-picton-blue-600 text-white rounded-lg font-semibold transition-all">
                   Select Course
                 </button>
               </motion.div>
@@ -259,11 +260,11 @@ export default function TeacherAttendance() {
         <div>
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-lg">
+            <div className="bg-gradient-to-br from-picton-blue to-baby-blue rounded-2xl p-6 text-white shadow-lg">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-white/90 font-medium">Total Students</p>
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <div>👥</div>
+                  <Icon name="users" size={20} />
                 </div>
               </div>
               <p className="text-4xl font-bold">{students.length}</p>
@@ -273,7 +274,7 @@ export default function TeacherAttendance() {
               <div className="flex items-center justify-between mb-2">
                 <p className="text-white/90 font-medium">Present</p>
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <div>✅</div>
+                  <Icon name="checkCircle" size={20} />
                 </div>
               </div>
               <p className="text-4xl font-bold">{getPresentCount()}</p>
@@ -283,7 +284,7 @@ export default function TeacherAttendance() {
               <div className="flex items-center justify-between mb-2">
                 <p className="text-white/90 font-medium">Absent</p>
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <div>❌</div>
+                  <Icon name="xCircle" size={20} />
                 </div>
               </div>
               <p className="text-4xl font-bold">{getAbsentCount()}</p>
@@ -296,7 +297,7 @@ export default function TeacherAttendance() {
             
             {students.length === 0 ? (
               <div className="text-center py-12">
-                <div className="text-6xl text-slate-300 dark:text-slate-600 mb-4">👥</div>
+                <Icon name="users" size={64} className="text-slate-300 dark:text-slate-600 mx-auto mb-4" />
                 <p className="text-slate-600 dark:text-slate-400 text-lg">No students found</p>
               </div>
             ) : (
@@ -346,7 +347,7 @@ export default function TeacherAttendance() {
                             animate={{ scale: 1 }}
                             className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center border-2 border-white dark:border-gray-800"
                           >
-                            <div className="text-white text-xs">✓</div>
+                            <Icon name="check" size={12} className="text-white" />
                           </motion.div>
                         )}
                         {attendance[studentId] === 'absent' && (
@@ -355,7 +356,7 @@ export default function TeacherAttendance() {
                             animate={{ scale: 1 }}
                             className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center border-2 border-white dark:border-gray-800"
                           >
-                            <div className="text-white text-xs">✕</div>
+                            <Icon name="x" size={12} className="text-white" />
                           </motion.div>
                         )}
                       </div>
@@ -377,15 +378,7 @@ export default function TeacherAttendance() {
                             : 'bg-white/50 dark:bg-gray-600/50 text-slate-600 dark:text-slate-300 hover:bg-green-50 dark:hover:bg-green-900/20 border border-slate-300 dark:border-slate-600'
                         }`}
                       >
-                        <motion.div
-                          animate={attendance[studentId] === 'present' ? {
-                            scale: [1, 1.3, 1],
-                            rotate: [0, 10, -10, 0]
-                          } : {}}
-                          transition={{ duration: 0.5 }}
-                        >
-                          ✓
-                        </motion.div>
+                        <Icon name="check" size={20} />
                         Present
                       </motion.button>
                       <motion.button
@@ -398,15 +391,7 @@ export default function TeacherAttendance() {
                             : 'bg-white/50 dark:bg-gray-600/50 text-slate-600 dark:text-slate-300 hover:bg-red-50 dark:hover:bg-red-900/20 border border-slate-300 dark:border-slate-600'
                         }`}
                       >
-                        <motion.div
-                          animate={attendance[studentId] === 'absent' ? {
-                            scale: [1, 1.3, 1],
-                            rotate: [0, 180, 360]
-                          } : {}}
-                          transition={{ duration: 0.5 }}
-                        >
-                          ✕
-                        </motion.div>
+                        <Icon name="x" size={20} />
                         Absent
                       </motion.button>
                     </div>
@@ -421,9 +406,9 @@ export default function TeacherAttendance() {
             <div className="flex justify-center">
               <button
                 onClick={handleSubmit}
-                className="px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-xl font-bold text-lg shadow-2xl transition-all transform hover:scale-105"
+                className="px-12 py-4 bg-gradient-to-r from-picton-blue to-baby-blue hover:from-picton-blue-600 hover:to-baby-blue-600 text-white rounded-xl font-bold text-lg shadow-2xl transition-all transform hover:scale-105"
               >
-                <span className="mr-2">✓</span>
+                <Icon name="check" size={20} className="inline mr-2" />
                 Confirm Attendance
               </button>
             </div>
@@ -440,8 +425,8 @@ export default function TeacherAttendance() {
             className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl"
           >
             <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-4">
-                <div className="text-3xl">⚠️</div>
+              <div className="w-16 h-16 rounded-full bg-baby-blue/20 flex items-center justify-center mx-auto mb-4">
+                <Icon name="exclamationCircle" size={32} className="text-baby-blue" />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Confirm Attendance</h3>
               <p className="text-slate-600 dark:text-slate-400">
@@ -481,16 +466,16 @@ export default function TeacherAttendance() {
               <button
                 onClick={confirmSubmit}
                 disabled={isSubmitting}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-amber-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-picton-blue to-baby-blue text-white rounded-lg font-semibold hover:from-picton-blue-600 hover:to-baby-blue-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="animate-spin">⏳</div>
+                    <Icon name="refresh" size={20} className="animate-spin" />
                     Submitting...
                   </>
                 ) : (
                   <>
-                    <div>✓</div>
+                    <Icon name="check" size={20} />
                     Confirm
                   </>
                 )}
@@ -509,7 +494,7 @@ export default function TeacherAttendance() {
             className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl text-center"
           >
             <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-              <div className="text-5xl">✅</div>
+              <Icon name="checkCircle" size={48} className="text-green-500" />
             </div>
             <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Attendance Submitted!</h3>
             <p className="text-slate-600 dark:text-slate-400">
